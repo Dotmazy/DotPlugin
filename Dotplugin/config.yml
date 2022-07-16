@@ -1,23 +1,16 @@
-#database:
-  #host: "www.host.fr"
-  #databasename: "dbname"
-  #user: ""
-  #password: "root"
-  #port: 3306
-
 database:
-  host: "db1.falix.cc"
-  databasename: "s662282_dotbase"
-  user: "u662282_5nQmhRSsC7"
-  password: "vall6WWwV@oz6B.z!rY+f@UB"
+  host: "www.host.fr"
+  databasename: "dbname"
+  user: ""
+  password: "root"
   port: 3306
 
 commands:
   error_not_permission: "&&cTu n'a pas la permission d'executer cette commande !"
-  error_cant_execute_in_console: "&&cCette commande ne peut pas être executer en console !"
+  error_cant_execute_in_console: "&&cCette commande ne peut pas Ãªtre executer en console !"
   5_second_message: "&&aTu sera tp dans 5 seconde."
   wait_message: "&&cTu ne peut pas faire cette commande avant %time% secondes !"
-  not_connected: "&&cCe joueur ne s'est jamais connecté au serveur !"
+  not_connected: "&&cCe joueur ne s'est jamais connectÃ© au serveur !"
   unknow_player: "&&cCe joueur n'est pas connecter ou est inexistant."
   adminchat:
     activate: "&&aTu a activer l'admin chat."
@@ -59,7 +52,7 @@ commands:
     success: "&&aVous avez banni &&6%player_name% &&b(%ban_duration%) &&apour : &&e%ban_reason%"
     unknow_time_unit: "&&cCette unit//e de temps n'existe pas !"
     duration_not_number: "&&cLa valeur 'dur//ee' doit etre un nombre !"
-    already_banned: "&&cCe joueur est déjà banni !"
+    already_banned: "&&cCe joueur est dÃ©jÃ  banni !"
   unban:
     succes: "&&aVous avez debanni &&6%player_name%."
     not_ban: "&&cCe joueur n'est pas banni !"
@@ -74,8 +67,8 @@ commands:
     create:
       success: "&&aLe rank &&6%rank_name% &&aa bien //et//e cr//eer."
       unknow_power: "&&cVeuiller entrer un nombre dans la valeur 'power' !"
-      unknow_default: "&&cLa valeur 'true/false' doit être un boolean !"
-      already_exist: "&&cLe rank &&6%rank_name% &&cexiste déjà !"
+      unknow_default: "&&cLa valeur 'true/false' doit Ãªtre un boolean !"
+      already_exist: "&&cLe rank &&6%rank_name% &&cexiste dÃ©jÃ  !"
     join:
       success: "&&aVous avez ajouter &&6%player_name%&&a //a &&6%rank_name% &&aavec succes."
       unknow_rank: "&&cLe rank &&6%rank_name% &&cn'existe pas !"
@@ -91,7 +84,7 @@ commands:
       set_success: "&&aLe power de &&6%rank_name% &&aa //et//e changer en &&r%rank_power% &&a."
       get_success: "&&aLe power de &&6%rank_name% &&aest &&r%rank_power% &&a."
       unknow_rank: "&&cLe rank &&6%rank_name% &&cn'existe pas !"
-      unknow_number: "&&cLa valeur 'power' doit être un nombre !"
+      unknow_number: "&&cLa valeur 'power' doit Ãªtre un nombre !"
 
 config:
   joinmsg: "%player_prefix% %player_name% &&7a rejoin le server."

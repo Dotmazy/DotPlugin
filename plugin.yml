@@ -1,0 +1,139 @@
+name: DotPlugin
+version: 1.0
+author: [Dotmazy]
+main: fr.dotmazy.dotplugin.Main
+api-version: 1.13
+commands:
+  broadcast:
+    description: Permet d'envoyer un message a tous le monde.
+    permission: dotplugin.bc
+    aliases: [bc]
+  freeze:
+    description: Permet de freeze ou unfreeze un joueur.
+    permission: dotplugin.freeze
+  drl:
+    description: Permet de reload le dotplugin.
+    permission: dotplugin.reload
+  world:
+    description: Permet de se teleporter dans un monde.
+    permission: dotplugin.world
+  setspawn:
+    description: Permet de changer le spawn du monde.
+    permission: dotplugin.setspawn
+  spawn:
+    description: Permet de se teleporter au spawn du monde.
+    permission: dotplugin.spawn
+  setlobby:
+    description: Permet de changer le lobby.
+    permission: dotplugin.setlobby
+  lobby:
+    description: Permet de se teleporter au lobby.
+    permission: dotplugin.lobby
+    aliases: [hub]
+  fly:
+    description: Permet d'activer ou desactiver le fly.
+    permission: dotplugin.fly
+  adminchat:
+    description: Permet d'activer ou desactiver l'admin chat.
+    permission: dotplugin.adminchat
+    aliases: [ac]
+  mute:
+    description: Permet de mute ou unmute une personne.
+    permission: dotplugin.mute
+  msg:
+    description: Permet d'envoyer des message priver.
+    permission: dotplugin.msg
+  ranks:
+    description: Command principale de ranks.
+    permission: dotplugin.ranks
+  nick:
+    description: Permet de se nickname.
+    permission: dotplugin.nick
+    aliases: [nickname]
+  gamemode:
+    description: Permet de changer le gamemode.
+    permission: dotplugin.gm
+    aliases: [gm]
+  gmc:
+    description: Permet de changer le gamemode en creative.
+    permission: dotplugin.gmc
+  gms:
+    description: Permet de changer le gamemode en survival.
+    permission: dotplugin.gms
+  gmsp:
+    description: Permet de changer le gamemode en spectator.
+    permission: dotplugin.gmsp
+  gma:
+    description: Permet de changer le gamemode en aventure.
+    permission: dotplugin.gma
+  speed:
+    description: Permet de changer la vitesse.
+    permission: dotplugin.speed
+  feed:
+    description: Permet de reprendre toute sa barre de fin.
+    permission: dotplugin.heal
+    aliases: [eat]
+  musics:
+    description: Permet d'ouvrir le menu de music (avec le pack).
+    permission: dotplugin.music
+    aliases: [chansons,musiques,music]
+  mod:
+    description: ON/OFF Moderation
+    permission: dotplugin.mod
+  report:
+    description: Permet de reporter une personne.
+    permission: dotplugin.report
+  reportview:
+    description: Permet de voir tous les report.
+    permission: dotplugin.reportview
+  heal:
+    description: Permet de se heal.
+    permission: dotplugin.heal
+  ban:
+    description: Bannir un joueur.
+    permission: dotplugin.ban
+  unban:
+    description: Debannir un joueur.
+    permission: dotplugin.unban
+  calc:
+    description: Faire des calcul.
+    permission: dotplugin.calc
+  balance:
+    description: Commande pour gerer l'argent.
+    aliases: [money,bal,eco,economy]
+    permission: dotplugin.balance
+  permissions:
+    description: Commande pour gerer les permissions.
+    aliases: [perm]
+    permission: dotplugin.permissions
+  tpall:
+    description: Teleporter tous le monde a un joueur.
+    permission: dotplugin.tpall
+  tpoffline:
+    description: Ce teleporter a la derniere location d'un joueur hors ligne.
+    permission: dotplugin.tpoffline
+    aliases: [tpo,tpoff]
+  pay:
+    description: Payer un joueur.
+    permission: dotplugin.pay
+  tphere:
+    description: Teleporter un joueur a nous.
+    permission: dotplugin.tphere
+  burn:
+    description: Bruler un joueur.
+    permission: dotplugin.burn
+  clearinventory:
+    description: Vider son inventaire.
+    permission: dotplugin.clear_inventory
+    aliases: [ci,cinventory,cleari,clearinv,cinv]
+  getpos:
+    description: Savoir la position d'un joueur (en ligne ou hors ligne).
+    permission: dotplugin.getpos
+  vanish:
+    description: Activer/desactiver le vanish.
+    permission: dotplugin.vanish
+permissions:
+  dotplugin.shownick:
+    description: Pour voir le nom des joueur nickname.
+  dotplugin.instanttp:
+    description: Pour ce teleporter instantanement.

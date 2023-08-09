@@ -1,0 +1,142 @@
+# Channel where log are send
+logChannel: "1111927223314825256"
+logChannelInvalid: "&cCan't send this message to discord because the log channel is invalid.\n&cPlease change the log channel in config.yml."
+logSuccessfullySend: "You have send this log to discord: \n%log%"
+logArgumentsError: "&cPlease use this command: /discord log <type> <message>"
+
+# Channel where in game chat are send
+# inGameChatChannel: "1111928135974408202"
+# inGameChatChannelInvalid: "&cCan't send this message to discord because the in game chat channel is invalid.\n&cPlease change the in game chat channel in config.yml."
+# inGameChatSuccessfullySend: "You have send this message to discord: \n%message%"
+# inGameChatArgumentsError: "&cPlease use this command: /discord sendingamechat <message>"
+
+# !! Discord link that not expire
+discordInviteLink: "https://discord.gg/4FQWPUwcEP"
+
+# All permissions:
+# dotplugin.*
+# dotplugin.commands.adminchat
+# dotplugin.commands.craft
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+commands:
+  onlyPlayerCommandMessage: "&cThis command can only send by a player !"
+  noPermissionMessage: "&cYou don't have permissions to execute this command !"
+  commandDisableMessage: "&cThis command is disable on this server !"
+  testArgument:
+    enable: true
+    message: "Do you mean &l%test_argument%&r?"
+
+  music:
+    enable: true
+    gui:
+      "minecraft:music.game.ne-rage-quitte-pas": "§bNe rage quitte pas"
+      "minecraft:music.game.": ""
+
+  spawn:
+    enable: true
+    waitTime: 5 #In seconds
+    tpMessage: "You are successfully tp to the spawn."
+    playerMoveMessage: "&cYou have move, teleport have been canceled."
+    tpSuccessfully: "You have been teleported to the spawn."
+    waitMessage: "Please wait &l%wait_time% &rsec without move."
+
+  home:
+    enable: true
+    waitTime: 5 #In seconds
+    playerMoveMessage: "&cYou have move, teleport have been canceled."
+    tpSuccessfully: "You have been teleported to the home &l%home_name%."
+    waitMessage: "Please wait &l%wait_time% &rsec without move."
+
+  lobby:
+    enable: true
+    waitTime: 5 #In seconds
+    playerMoveMessage: "&cYou have move, teleport have been canceled."
+    tpSuccessfully: "You have been teleported to the lobby."
+    waitMessage: "Please wait &l%wait_time% &rsec without move."
+
+  warp:
+    enable: true
+    waitTime: 5 #In seconds
+    playerMoveMessage: "&cYou have move, teleport have been canceled."
+    tpSuccessfully: "You have been teleported to the warp &l%warp_name%."
+    waitMessage: "Please wait &l%wait_time% &rsec without move."
+
+  craft:
+    enable: true
+
+  smelt:
+    enable: true
+
+  enderchest:
+    enable: true
+
+  customitems:
+    enable: false
+
+  display:
+    enable: true
+    giveMessage: "Here is the item to manage all display entities."
+    itemName: "&bDisplay wand"
+    itemLore:
+      - "&8This is a wand to make or manage display entities."
+
+  hypixelitems:
+    enable: false
+
+  adminchat:
+    enable: true
+    enableMessage: "Your now in the admin chat."
+    disableMessage: "Your now no longer in the admin chat."
+
+  mod:
+    enable: false
+
+  freeze:
+    enable: true
+    noArgsMessage: "&cPlease use this command: /freeze <player>"
+    invalidPlayerMessage: "&cThis player doesn't exist or aren't connected !"
+    successfullyFreezeMessage: "You have successfully freeze &l%player_name%"
+    errorWhenFreezeMessage: "&cAn error occurred when freeze &l%player_name%"
+
+  gamemode:
+    enable: true #If disable it automatically use default command
+    invalidGamemodeMessage: "&cInvalid gamemode !"
+    invalidPlayerMessage: "&cInvalid player !"
+    successfullyChange: "You have set your gamemode to &l%player_gamemode%"
+
+  mute:
+    enable: true
+    noMuteArg: "§cPlease use this command: /mute <player>"
+    invalidPlayer: "Invalid player !"
+    successfullyMute: "You have successfully mute %mute_player_name%"
+    alreadyMute: "&c%mute_player_name% are already mute !"
+    successfullyUnmute: "You have successfully unmute %mute_player_name%"
+    alreadyUnmute: "&c%mute_player_name% are not mute !"
+
+  nick:
+    enable: false
+
+  rank:
+    enable: false
+
+  report:
+    enable: false
+
+  vanish:
+    enable: true

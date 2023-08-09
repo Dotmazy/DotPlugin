@@ -30,7 +30,7 @@ public class GmspCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerm((Player) sender,"dotplugin.gamemode.*") || PlayerApi.hasPerm((Player) sender,"dotplugin.gamemode.spectator"))){
+        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.gamemode.*") || PlayerApi.hasPerms((Player) sender,"dotplugin.gamemode.spectator"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

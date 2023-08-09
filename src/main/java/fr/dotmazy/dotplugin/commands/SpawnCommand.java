@@ -47,7 +47,7 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
 
         Location spawn = CommandApi.getSpawn(player.getWorld());
 
-        if (!PlayerApi.hasPerm(player,"dotplugin.spawn.noWait")){
+        if (!PlayerApi.hasPerms(player,"dotplugin.spawn.noWait")){
             Location loc = player.getLocation();
             sender.sendMessage("Please wait "+dotPlugin.getConfig().getInt("spawnCommandWaitTime")+" sec without move.");
             Bukkit.getScheduler().runTaskLater(dotPlugin,() -> {

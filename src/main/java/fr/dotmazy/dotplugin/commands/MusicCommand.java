@@ -40,7 +40,7 @@ public class MusicCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        if (!(PlayerApi.hasPerm((Player) sender,"dotplugin.music"))){
+        if (!(PlayerApi.hasPerms((Player) sender,"dotplugin.music"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

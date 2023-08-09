@@ -12,40 +12,46 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.permissions.Permissible;
-import org.bukkit.permissions.PermissibleBase;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.javacord.api.DiscordApi;
+import org.javacord.api.DiscordApiBuilder;
 
 import java.util.*;
 
 public class DotPlugin extends JavaPlugin {
+    private static DotPlugin INSTANCE;
 
     /** Don't use this (use api) <p></p>*/
-    public static List<String> perms = new ArrayList<String>();
+    public static List<String> perms = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
-    public static List<Player> mutePlayers = new ArrayList<Player>();
+    public static List<Player> mutePlayers = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
-    public static List<Player> freezePlayers = new ArrayList<Player>();
+    public static List<Player> freezePlayers = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
-    public static Map<Player, ItemStack[]> modPlayers = new HashMap<Player, ItemStack[]>();
+    public static Map<Player, ItemStack[]> modPlayers = new HashMap<>();
     /** Don't use this (use api) <p></p>*/
-    public static List<Player> vanishedPlayers = new ArrayList<Player>();
+    public static List<Player> vanishedPlayers = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
-    public static List<Player> adminChatPlayers = new ArrayList<Player>();
+    public static List<Player> adminChatPlayers = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
-    public static HashMap<String,ConfigFile> files = new HashMap<String,ConfigFile>();
+    public static HashMap<String,ConfigFile> files = new HashMap<>();
+
 
     @Override
     public void onEnable() {
+        INSTANCE = this;
         saveDefaultConfig();
         TextApi.init(this);
         registerConfigFiles();
         registerCommands();
         registerEvents();
         Bukkit.getLogger().addHandler(new LogEvent(this));
+
+
+        DiscordApi api = new DiscordApiBuilder().setToken("NzY4MDQ0NzMwODA1Mzg3MjY1.G_h5gO.LvEGBEZPDJvLTOI0-o1YC6IwxbcNjm9yKaN9tE").login().join();
+        System.out.println(api.createBotInvite());
+
 
         System.out.println(files);
         for (String key : files.get("players").get().getKeys(false)){
@@ -167,5 +173,7 @@ public class DotPlugin extends JavaPlugin {
         files.put(fileName,file);
         return files.get(fileName);
     }
+
+    public static DotPlugin getInstance(){ return INSTANCE; }
 
 }

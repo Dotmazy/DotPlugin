@@ -38,7 +38,7 @@ public class SmeltCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        if (!(PlayerApi.hasPerm((Player) sender,"dotplugin.smelt"))){
+        if (!(PlayerApi.hasPerms((Player) sender,"dotplugin.smelt"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

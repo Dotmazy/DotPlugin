@@ -34,7 +34,7 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerm((Player) sender,"dotplugin.mute"))){
+        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.mute"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

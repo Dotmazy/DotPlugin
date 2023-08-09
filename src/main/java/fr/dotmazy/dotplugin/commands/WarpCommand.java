@@ -60,7 +60,7 @@ public class WarpCommand extends CommandUtil implements CommandExecutor, TabComp
             return true;
         }
         options.put("warp_name",args[0]);
-        if (!PlayerApi.hasPerm(player,"dotplugin.warp.noWait")){
+        if (!PlayerApi.hasPerms(player,"dotplugin.warp.noWait")){
             Location loc = player.getLocation();
             sender.sendMessage(TextApi.getTranslateConfig("commands.warp.waitMessage",options));
             Bukkit.getScheduler().runTaskLater(dotPlugin,() -> {

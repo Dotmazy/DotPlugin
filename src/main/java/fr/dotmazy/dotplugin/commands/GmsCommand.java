@@ -30,7 +30,7 @@ public class GmsCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerm((Player) sender,"dotplugin.gamemode.*") || PlayerApi.hasPerm((Player) sender,"dotplugin.gamemode.survival"))){
+        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.gamemode.*") || PlayerApi.hasPerms((Player) sender,"dotplugin.gamemode.survival"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

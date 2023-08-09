@@ -9,7 +9,7 @@ public class DotReloadCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        DotPlugin.getInstance().reload();
+        DotPlugin.reload();
         return false;
     }
 

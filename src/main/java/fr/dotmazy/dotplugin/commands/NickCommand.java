@@ -26,7 +26,7 @@ public class NickCommand extends CommandUtil {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerm((Player) sender,"dotplugin.nick"))){
+        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.nick"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

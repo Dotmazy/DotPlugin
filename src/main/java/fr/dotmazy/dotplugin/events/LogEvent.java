@@ -1,8 +1,6 @@
 package fr.dotmazy.dotplugin.events;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.configs.ConfigFile;
-import github.scarsz.discordsrv.util.DiscordUtil;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -22,8 +20,8 @@ public class LogEvent extends ConsoleHandler {
         String loggerName = record.getLoggerName();
         String message = record.getMessage();
 
-        DiscordUtil.sendMessage(DiscordUtil.getTextChannelById(dotPlugin.getConfig().getString("logChannel")),
-                "level:"+level.toString()+" | loggername:"+loggerName+" | message:"+message);
+        //DiscordUtil.sendMessage(DiscordUtil.getTextChannelById(dotPlugin.getConfig().getString("logChannel")),
+                //"level:"+level.toString()+" | loggername:"+loggerName+" | message:"+message);
 
         super.publish(record);
     }

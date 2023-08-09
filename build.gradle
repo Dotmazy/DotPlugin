@@ -2,24 +2,26 @@ plugins {
     id 'java'
 }
 
-group = 'fr.dotmazy'
-version = '1.0'
-
 repositories {
     mavenCentral()
-    maven {
-        name = "spigotmc-repo"
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
-    }
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
-    }
+    maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url = "https://oss.sonatype.org/content/groups/public/" }
 }
 
 dependencies {
-compileOnly "org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT"
 }
+
+tasks.named('processResources', ProcessResources).configure {
+var replaceProperties = [
+        name: name, version: version, main: main, api_version:api_version, authors: authors
+]
+
+inputs.properties replaceProperties
+
+filesMatching(['plugin.yml']) {
+    expand replaceProperties + [project: project]
+}}
 
 def targetJavaVersion = 17
 java {
@@ -31,7 +33,11 @@ java {
     }
 }
 
+jar{
+}
+
 tasks.withType(JavaCompile).configureEach {
+    libsDirectory.set(file("/server/plugins/"))
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
     }

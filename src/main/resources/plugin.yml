@@ -1,0 +1,5 @@
+name: DotPlugin
+version: '${version}'
+main: fr.dotmazy.dotplugin.DotPlugin
+api-version: '1.20'
+authors: [Dotmazy]

@@ -3,7 +3,7 @@ package com.example.examplemod;
 import org.bukkit.command.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.example.examplemod.commands.ExampleGuiCommand;k
+import com.example.examplemod.commands.ExampleGuiCommand;
 
 public class DotPlugin extends JavaPlugin {
 

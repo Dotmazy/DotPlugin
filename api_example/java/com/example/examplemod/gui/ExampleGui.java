@@ -3,7 +3,7 @@ package com.example.examplemod.gui;
 import fr.dotmazy.dotplugin.util.gui.AbstractGui;
 import fr.dotmazy.dotplugin.util.gui.GuiItem;
 import fr.dotmazy.dotplugin.util.gui.GuiType;
-import org.bukkit.Material;
+import org.bukkit.Material;h
 
 public class ExampleGui extends AbstractGui {
 

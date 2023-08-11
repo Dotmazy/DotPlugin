@@ -1,12 +1,11 @@
 package fr.dotmazy.dotplugin.configs;
 
-import org.bukkit.Bukkit;
+import fr.dotmazy.dotplugin.DotPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Objects;
 
 public class ConfigFile {
 
@@ -14,12 +13,10 @@ public class ConfigFile {
     private FileConfiguration configFile;
     private final String fileName;
 
-    public ConfigFile(String fileName){
-        this.fileName = fileName;
-    }
+    public ConfigFile(String fileName){ this.fileName = fileName; }
 
     public void setup(){
-        this.file = new File(Objects.requireNonNull(Bukkit.getServer().getPluginManager().getPlugin("DotPlugin")).getDataFolder(),this.fileName+".yml");
+        this.file = new File(DotPlugin.getInstance().getDataFolder(),this.fileName+".yml");
 
         if (!this.file.exists()){
             try {
@@ -29,9 +26,7 @@ public class ConfigFile {
         this.configFile = YamlConfiguration.loadConfiguration(this.file);
     }
 
-    public FileConfiguration get(){
-        return this.configFile;
-    }
+    public FileConfiguration get(){ return this.configFile; }
 
     public void save(){
         try {
@@ -41,8 +36,11 @@ public class ConfigFile {
         }
     }
 
-    public void reload(){
-        this.configFile = YamlConfiguration.loadConfiguration(this.file);
+    public void reload(){ this.configFile = YamlConfiguration.loadConfiguration(this.file); }
+
+    public ConfigFile addDefault(String path, Object value) {
+        this.configFile.addDefault(path, value);
+        return this;
     }
 
 }

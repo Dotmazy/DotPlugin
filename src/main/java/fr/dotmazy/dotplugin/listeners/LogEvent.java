@@ -1,4 +1,4 @@
-package fr.dotmazy.dotplugin.events;
+package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 

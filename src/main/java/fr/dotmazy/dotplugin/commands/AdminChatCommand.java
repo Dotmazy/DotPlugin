@@ -2,13 +2,11 @@ package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.TextApi;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import java.lang.Object;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.w3c.dom.Text;
 
 import java.util.Map;
 
@@ -22,7 +20,7 @@ public class AdminChatCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Map<String,Object> options = Map.of(
+        Map<String, Object> options = Map.of(
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );

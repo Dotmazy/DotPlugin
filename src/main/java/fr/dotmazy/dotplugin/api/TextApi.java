@@ -1,6 +1,7 @@
 package fr.dotmazy.dotplugin.api;
 
 import fr.dotmazy.dotplugin.DotPlugin;
+import java.lang.Object;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

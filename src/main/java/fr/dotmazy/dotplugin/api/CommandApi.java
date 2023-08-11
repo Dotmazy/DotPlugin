@@ -4,10 +4,9 @@ import fr.dotmazy.dotplugin.DotPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+
 import java.util.Objects;
 
 public class CommandApi {

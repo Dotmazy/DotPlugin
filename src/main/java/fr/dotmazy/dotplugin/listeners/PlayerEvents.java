@@ -1,4 +1,4 @@
-package fr.dotmazy.dotplugin.events;
+package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.PlayerApi;
@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,11 +18,8 @@ import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.permissions.Permissible;
-import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.util.Vector;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -104,7 +100,7 @@ public class PlayerEvents implements Listener {
         meta.addEnchant(Enchantment.PROTECTION_FALL, 1, false);
         item.setItemMeta(meta);
         if (player.getInventory().getItemInMainHand() == item){
-            DisplayGui.openInventory(player);
+            //DisplayGui.openInventory(player);
         }
     }
 

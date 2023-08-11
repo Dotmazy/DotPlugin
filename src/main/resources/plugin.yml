@@ -1,5 +1,97 @@
-name: '${name}'
-version: '${version}'
-main: ${main}
-api-version: '${api_version}'
-authors: [${authors}]
+name: '${plugin_name}'
+version: '${plugin_version}'
+main: ${plugin_main}
+api-version: '${plugin_api_version}'
+authors: [${plugin_authors}]
+commands:
+  guitest:
+    description: no
+  rank:
+    description: Manage ranks
+    usage: "/rank create <name> -perms <permissions> -prefix <prefix> -suffix <suffix>\n
+            /rank remove <name>\n
+            /rank modify <name> [name,prefix,suffix,perms,addperm,removeperm]\n
+            /rank join <player> <name>\n
+            /rank leave <player> <name>\n"
+    aliases: ["ranks","group","groups"]
+  report:
+    description: Report a player
+    usage: "/report <reason>"
+    aliases: ["warn"]
+  freeze:
+    description: Freeze a player
+    usage: "/freeze <player>"
+  unfreeze:
+    description: Unfreeze a player
+    usage: "/unfreeze <player>"
+  mute:
+    description: Mute a player
+    usage: "/mute <player>"
+  unmute:
+    description: Unmute a player
+    usage: "/unmute <player>"
+  spawn:
+    description: Tp to the spawn
+  setspawn:
+    description: Set the spawn
+  warp:
+    description: Teleport to a warp
+    usage: "/warp <name>"
+  setwarp:
+    description: Set a warp
+    usage: "/setwarp <name>"
+  lobby:
+    description: Teleport to the lobby
+  setlobby:
+    description: Set the lobby
+  music:
+    descritpion: Open a menu for play music (need pack)
+  gamemode:
+    description: Change gamemode
+    usage: "/gm <gamemode[survival,creative,adventure,spectator,s,c,a,sp,0,1..]> (<player>)"
+    aliases: ["gm"]
+  gms:
+    description: Change gamemode to survival
+    usage: "/gms (<player>)"
+  gmc:
+    description: Change gamemode to creative
+    usage: "/gmc (<player>)"
+  gma:
+    description: Change gamemode to adventure
+    usage: "/gma (<player>)"
+  gmsp:
+    description: Change gamemode to spectator
+    usage: "/gmsp (<player>)"
+  mod:
+    description: Toggle moderation mode
+    aliases: ["moderation"]
+  vanish:
+    description: Toggle vanish
+    aliases: ["v"]
+  adminchat:
+    description: Toggle admin chat
+    aliases: ["ac"]
+  enderchest:
+    description: Open ender chest
+    aliases: ["ec"]
+  craft:
+    description: Open a crafting table
+    aliases: ["craftingtable","ct"]
+  smelt:
+    description: Smelt item in your hand
+  nick:
+    description: Change your nick name (Remove if you don't provide name)
+    usage: "/nick (<name>)"
+  msg:
+    description: Send a mesage to a player
+    usage: "/msg <player> <message>"
+    aliases: ["message"]
+  drl:
+    description: Reload DotPlugin
+    aliases: ["dotreload"]
+  customitems:
+    description: Manage custom items
+    aliases: ["ci"]
+  display:
+    description: Summon and manage a display
+    aliases: ["dp"]

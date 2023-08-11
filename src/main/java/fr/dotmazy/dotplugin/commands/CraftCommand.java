@@ -2,13 +2,13 @@ package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.TextApi;
+import java.lang.Object;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.CraftingInventory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class CraftCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Map<String,Object> options = new HashMap<>(Map.of(
+        Map<String, Object> options = new HashMap<>(Map.of(
                 "player", sender instanceof Player ? (Player) sender : null,
                 "world", sender instanceof Player ? ((Player) sender).getWorld() : null
         ));

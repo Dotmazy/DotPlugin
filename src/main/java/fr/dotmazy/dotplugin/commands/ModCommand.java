@@ -3,6 +3,7 @@ package fr.dotmazy.dotplugin.commands;
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.PlayerApi;
 import fr.dotmazy.dotplugin.api.TextApi;
+import java.lang.Object;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,14 +25,14 @@ public class ModCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Map<String,Object> options = Map.of(
+        Map<String, Object> options = Map.of(
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );
-        if (!dotPlugin.getConfig().getBoolean("commands.mod.enable")){
-            sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
-            return true;
-        }
+        //if (!dotPlugin.getConfig().getBoolean("commands.mod.enable")){
+            //sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
+            //return true;
+        //}
         if (sender instanceof Player && !(sender.hasPermission("dotplugin.commands.mod"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;

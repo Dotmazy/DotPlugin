@@ -1,17 +1,13 @@
 package fr.dotmazy.dotplugin.gui;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class DisplayGui extends Gui {
+public class DisplayGui {
 
-    public static Inventory blockinv;
+    /*public static Inventory blockinv;
     public static Inventory iteminv;
     public static Inventory textinv;
     public static void initializeItems() {
@@ -56,6 +52,6 @@ public class DisplayGui extends Gui {
         textinv = Bukkit.createInventory(null, 45, "§6§lText §r§6Display: ");
         initializeTextItems();
         player.openInventory(textinv);
-    }
+    }*/
 
 }

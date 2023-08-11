@@ -2,10 +2,10 @@ package fr.dotmazy.dotplugin.api;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.util.Rank;
+import java.util.Objects;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.*;

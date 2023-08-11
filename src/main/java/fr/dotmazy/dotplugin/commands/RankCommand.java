@@ -2,13 +2,12 @@ package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.PermApi;
-import fr.dotmazy.dotplugin.api.PlayerApi;
 import fr.dotmazy.dotplugin.api.RankApi;
 import fr.dotmazy.dotplugin.api.TextApi;
 import fr.dotmazy.dotplugin.gui.RankGui;
 import fr.dotmazy.dotplugin.util.Rank;
+import java.lang.Object;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,7 +29,7 @@ public class RankCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Map<String,Object> options = Map.of(
+        Map<String, Object> options = Map.of(
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );

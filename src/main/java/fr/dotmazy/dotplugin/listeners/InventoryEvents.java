@@ -1,25 +1,40 @@
-package fr.dotmazy.dotplugin.events;
+package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.gui.DisplayGui;
-import fr.dotmazy.dotplugin.gui.MusicGui;
-import fr.dotmazy.dotplugin.gui.RankGui;
-import org.bukkit.Material;
+import fr.dotmazy.dotplugin.util.gui.InventoryEvent;
+import fr.dotmazy.dotplugin.util.gui.ItemEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.*;
+
 public class InventoryEvents implements Listener {
+	public static List<ItemEvent> itemClickEvents = new ArrayList<>();
+	public static List<InventoryEvent> openEvents = new ArrayList<>();
+	public static List<InventoryEvent> closeEvents = new ArrayList<>();
 
 	@EventHandler
-	public void onClick(InventoryClickEvent event){
-		event.setCancelled(PlayerApi.isInModerationMode((Player)event.getWhoClicked()));
-		if(event.getCurrentItem()==null) return;
+	public static void onClick(InventoryClickEvent event){
 		ItemStack clickedItem = event.getCurrentItem();
+		if(clickedItem==null) return;
 		Player player = (Player) event.getWhoClicked();
-		if(event.getInventory() == DisplayGui.inv) {
+		int number = event.getHotbarButton();
+
+		for (ItemEvent itemEvent : itemClickEvents) {
+			if (event.getInventory() == itemEvent.getInventory() && !event.getSlotType().equals(InventoryType.SlotType.QUICKBAR))
+				if(itemEvent.getItem() == null) event.setCancelled(itemEvent.isCanceled());
+				else if (clickedItem.equals(itemEvent.getItem()) && event.getSlot() == itemEvent.getSlot() && event.getClick() == itemEvent.getType()) {
+					event.setCancelled(itemEvent.isCanceled());
+					if (itemEvent.getEvent() != null) itemEvent.getEvent().run(itemEvent.getItem(), player,number);
+				}
+		}
+
+		if(!event.isCancelled()) event.setCancelled(PlayerApi.isInModerationMode((Player)event.getWhoClicked()));
+
+		/*if(event.getInventory() == DisplayGui.inv) {
 			event.setCancelled(true);
 			if (clickedItem.getItemMeta().getDisplayName().equals("Block")){
 				DisplayGui.openBlockInventory(player);
@@ -150,7 +165,38 @@ public class InventoryEvents implements Listener {
 				MusicGui.musicGui();
 				MusicGui.openInventory(player);
 	        }
+		}*/
+	}
+
+	/*@EventHandler
+	public static void onDrag(InventoryDragEvent event){
+		System.out.println(event.getType());
+		System.out.println(event.getRawSlots());
+		System.out.println(event.getNewItems());
+		System.out.println(event.getOldCursor());
+	}*/
+
+	@EventHandler
+	public static void onClose(InventoryCloseEvent event){
+		for(InventoryEvent inventoryEvent : closeEvents){
+			if(event.getInventory() == inventoryEvent.getInventory()){
+				inventoryEvent.getEvent().run((Player)event.getPlayer());
+			}
 		}
 	}
+
+	@EventHandler
+	public static void onOpen(InventoryOpenEvent event){
+		for(InventoryEvent inventoryEvent : openEvents){
+			if(event.getInventory() == inventoryEvent.getInventory()){
+				inventoryEvent.getEvent().run((Player)event.getPlayer());
+			}
+		}
+	}
+
+	/*@EventHandler
+	public static void onMove(InventoryMoveItemEvent event){
+		System.out.println(event.getItem());
+	}*/
 	
 }

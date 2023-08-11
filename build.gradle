@@ -6,17 +6,20 @@ repositories {
     mavenCentral()
     maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
+    maven { url = "https://nexus.scarsz.me/content/groups/public/" }
 }
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT"
 
-    implementation 'org.javacord:javacord:3.8.0'
+    compileOnly "com.discordsrv:discordsrv:1.26.0"
+
+    compileOnly fileTree(dir:"libs/",include:"*.jar")
 }
 
 tasks.named('processResources', ProcessResources).configure {
 var replaceProperties = [
-        name: name, version: version, main: main, api_version:api_version, authors: authors
+        plugin_name: plugin_name, plugin_version: plugin_version, plugin_main: plugin_main, plugin_api_version: plugin_api_version, plugin_authors: plugin_authors
 ]
 
 inputs.properties replaceProperties
@@ -25,7 +28,7 @@ filesMatching(['plugin.yml']) {
     expand replaceProperties + [project: project]
 }}
 
-def targetJavaVersion = 17
+def targetJavaVersion = 20
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion

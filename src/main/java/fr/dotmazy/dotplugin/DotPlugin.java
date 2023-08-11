@@ -1,26 +1,26 @@
 package fr.dotmazy.dotplugin;
 
-import fr.dotmazy.dotplugin.api.Api;
 import fr.dotmazy.dotplugin.api.TextApi;
 import fr.dotmazy.dotplugin.commands.*;
 import fr.dotmazy.dotplugin.configs.ConfigFile;
-import fr.dotmazy.dotplugin.events.*;
+import fr.dotmazy.dotplugin.listeners.*;
+import github.scarsz.discordsrv.DiscordSRV;
+
+import java.util.Objects;
+
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.javacord.api.DiscordApi;
-import org.javacord.api.DiscordApiBuilder;
 
 import java.util.*;
 
-public class DotPlugin extends JavaPlugin {
+public class DotPlugin extends JavaPlugin implements Listener {
     private static DotPlugin INSTANCE;
+    private final DiscordSRVListener discordSRVListener = new DiscordSRVListener(this);
 
     /** Don't use this (use api) <p></p>*/
     public static List<String> perms = new ArrayList<>();
@@ -37,21 +37,17 @@ public class DotPlugin extends JavaPlugin {
     /** Don't use this (use api) <p></p>*/
     public static HashMap<String,ConfigFile> files = new HashMap<>();
 
-
-    @Override
     public void onEnable() {
         INSTANCE = this;
+        getServer().getPluginManager().registerEvents(this, this);
+        DiscordSRV.api.subscribe(discordSRVListener);
+
         saveDefaultConfig();
         TextApi.init(this);
         registerConfigFiles();
         registerCommands();
         registerEvents();
         Bukkit.getLogger().addHandler(new LogEvent(this));
-
-
-        DiscordApi api = new DiscordApiBuilder().setToken("NzY4MDQ0NzMwODA1Mzg3MjY1.G_h5gO.LvEGBEZPDJvLTOI0-o1YC6IwxbcNjm9yKaN9tE").login().join();
-        System.out.println(api.createBotInvite());
-
 
         System.out.println(files);
         for (String key : files.get("players").get().getKeys(false)){
@@ -60,10 +56,14 @@ public class DotPlugin extends JavaPlugin {
         }
     }
 
-    @Override
-    public void onDisable() { saveAll(); }
+    public void onDisable() {
+        DiscordSRV.api.unsubscribe(discordSRVListener);
+        saveAll();
+    }
 
     private void registerCommands() {
+        registerCommand("guitest", new ExampleGuiCommand());
+
         registerCommand("rank", new RankCommand(this));
         registerCommand("mute", new MuteCommand(this));
         registerCommand("unmute", new UnmuteCommand(this));
@@ -103,29 +103,20 @@ public class DotPlugin extends JavaPlugin {
     }
 
     private void registerConfigFiles() {
-        registerFile("ranks",
-                new Object[]{"admin.prefix", "&c[Admin] &r"},
-                new Object[]{"admin.suffix", ""},
-                new Object[]{"admin.permissions", new String[]{"*"}}
-        );
-        registerFile("players");
-        registerFile("worlds");
-        registerFile("items",
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.material", "diamond"},
-                new Object[]{"example.lore", new String[]{"&7Example lore 1","&7Example lore 2"}},
-                new Object[]{"example.enchants.sharpness", 3},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"},
-                new Object[]{"example.name", "&2Example"}
-        );
-        registerFile("hypixelitems");
+        registerFile("ranks")
+                .addDefault("admin.prefix", "&c[Admin] &r")
+                .addDefault("admin.suffix", "")
+                .addDefault("admin.permissions", new String[]{"*"}).save();
+        registerFile("players").save();
+        registerFile("worlds").save();
+        registerFile("items")
+                .addDefault("example.name", "&2Example")
+                .addDefault("example.material", "diamond")
+                .addDefault("example.lore", new String[]{"&7Example lore 1","&7Example lore 2"})
+                .addDefault("example.enchants.sharpness", 3)
+                .addDefault("example.name", "&2Example")
+                .save();
+        registerFile("hypixelitems").save();
     }
 
     public static void saveAll(){
@@ -138,6 +129,7 @@ public class DotPlugin extends JavaPlugin {
     public static boolean reload(){
         try {
             Plugin dotPlugin = Bukkit.getPluginManager().getPlugin("DotPlugin");
+            for(ConfigFile file : files.values()){ file.reload(); }
             dotPlugin.reloadConfig();
             dotPlugin.getPluginLoader().disablePlugin(dotPlugin);
             dotPlugin.getPluginLoader().enablePlugin(dotPlugin);
@@ -147,29 +139,18 @@ public class DotPlugin extends JavaPlugin {
 
 
 
-    private void registerEvent(Listener event){
-        Bukkit.getServer().getPluginManager().registerEvents(event, this);
-    }
+    public void registerEvent(Listener event){ Bukkit.getServer().getPluginManager().registerEvents(event, this); }
 
     private void registerCommand(String name, CommandExecutor executor){
-
         try{getServer().getPluginCommand(name).setExecutor(executor);}catch(Exception ignore) {}
-        try{Objects.requireNonNull(getServer().getPluginCommand(name)).setTabCompleter((TabCompleter)executor);}catch(Exception ignored){}
+        try{
+            Objects.requireNonNull(getServer().getPluginCommand(name)).setTabCompleter((TabCompleter)executor);}catch(Exception ignored){}
     }
 
-    private ConfigFile registerFile(String fileName, Object[]... defaults){
+    private ConfigFile registerFile(String fileName){
         ConfigFile file = new ConfigFile(fileName);
         file.setup();
-
-        for (Object[] def : defaults) {
-            String path = (String) def[0];
-            Object value = def[1];
-            file.get().addDefault(path, value);
-        }
-
         file.get().options().copyDefaults(true);
-        file.save();
-
         files.put(fileName,file);
         return files.get(fileName);
     }

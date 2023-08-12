@@ -1,16 +1,21 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
+import fr.dotmazy.dotplugin.util.music.Music;
 import fr.dotmazy.dotplugin.api.TextApi;
-import fr.dotmazy.dotplugin.gui.MusicGui;
+
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.gui.MusicGui;
+import fr.dotmazy.dotplugin.util.music.PlayedMusic;
 import org.bukkit.Bukkit;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,80 +35,40 @@ public class MusicCommand implements CommandExecutor, TabCompleter {
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );
-        if (!dotPlugin.getConfig().getBoolean("commands.home.enable")){
+        /*if (!dotPlugin.getConfig().getBoolean("commands.music.enable")){
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
-        }
-        if (!(sender instanceof Player)) {
+        }*/
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        if (!(PlayerApi.hasPerms((Player) sender,"dotplugin.music"))){
+        /*if (!(PlayerApi.hasPerms(player,"dotplugin.music"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
-        }
+        }*/
 
         if (args.length > 0){
-            try{
-                Player player = (Player) sender;
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"stopsound "+sender.getName()+" record");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"execute at "+sender.getName()+" run playsound minecraft:music.game."+args[0]+" record "+sender.getName()+" ~ ~ ~");
-            }catch(Exception e){
-                e.printStackTrace();
-                sender.sendMessage("Invalid music !");
-            }
+            if(args[0].equals("auto")) Music.toggleAutoMusic(player);
+            else if(args[0].equals("stop")) Music.stopAll(player);
+            else if(Music.get(args[0]) != null) Music.startMusic(player, args[0]);
+            else player.sendMessage("\u00A7cUnknown music: "+args[0]);
             return true;
         }
-        MusicGui.musicGui();
-        MusicGui.musicGui2();
-        MusicGui.openInventory((Player)sender);
+        Inventory inv = new MusicGui().getMainInventory();
+        if(inv!=null) player.openInventory(inv);
 
         return true;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if(args.length == 1) return makeTabList(args[0],
-                "ne-rage-quitte-pas",
-                "jai-la-dalle",
-                "ce-soir",
-                "court-metrage-musicale",
-                "dans-la-nuit",
-                "herobrine",
-                "jaimerais-trop-quil-creve",
-                "jai-sombre",
-                "jarrive-pas-a-pecho",
-                "jean-kevin",
-                "je-construis-ma-maison",
-                "je-toublierais-jamais",
-                "la-pire-des-teams",
-                "le-temp-dun-reve",
-                "ma-pelle",
-                "mon-diams-ou-tes",
-                "noel-pour-toi-cest-mort",
-                "pas-lniveau",
-                "pgm",
-                "plus-tard",
-                "yen-a-marre-dhalloween",
-                "tu-as-explose",
-                "tout-casser",
-                "toi-et-moi",
-                "sur-ma-map",
-                "sur-blood-symphony",
-                "save-me",
-                "roots-noob",
-                "redstone",
-                "popopop-bloc-par-bloc",
-                "enderman",
-                "zombie"
-        );
-        return null;
-    }
-
-    public static List<String> makeTabList(String arg, String... list){
         List<String> result = new ArrayList<>();
-        for (String s : list){
-            if(s.startsWith(arg)) result.add(s);
+        if(args.length == 1){
+            for(String m : Music.getStringMusics())
+                if(m.startsWith(args[0])) result.add(m);
+            if("auto".startsWith(args[0])) result.add("auto");
+            if("stop".startsWith(args[0])) result.add("stop");
         }
         return result;
     }

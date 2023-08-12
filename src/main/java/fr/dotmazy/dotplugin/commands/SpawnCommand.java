@@ -50,9 +50,9 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
                 Location nloc = player.getLocation();
                 if (loc.getX()==nloc.getX() && loc.getY()==nloc.getY() && loc.getZ()==nloc.getZ()) {
                     player.teleport(spawn);
-                    player.sendMessage("§You have been teleported to the spawn.");
+                    player.sendMessage("u00A7You have been teleported to the spawn.");
                 } else {
-                    player.sendMessage("§cYou have move, teleport have been canceled.");
+                    player.sendMessage("u00A7cYou have move, teleport have been canceled.");
                 }
             },dotPlugin.getConfig().getInt("spawnCommandWaitTime")*20L);
         }else {

@@ -3,6 +3,8 @@ package fr.dotmazy.dotplugin.api;
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.util.Rank;
 import java.util.Objects;
+
+import fr.dotmazy.dotplugin.util.raw.RawBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,6 +13,10 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class PlayerApi {
+
+    public static void sendRawMessage(Player player, RawBuilder raw){
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"tellraw "+player.getName()+" "+raw.toString());
+    }
 
     /**
      * Define a rank for a player.

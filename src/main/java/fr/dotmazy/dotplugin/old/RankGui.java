@@ -1,4 +1,4 @@
-package fr.dotmazy.dotplugin.gui;
+package fr.dotmazy.dotplugin.old;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class RankGui {
     public static Inventory inv = Bukkit.createInventory(null, 54, "Ranks");
 
     public static void openInventory(final Player player) {
-        inv = Bukkit.createInventory(null, 45, "§eRanks 1/"+(RankApi.getRanks().size()/45+1)+": ");
+        inv = Bukkit.createInventory(null, 45, "u00A7eRanks 1/"+(RankApi.getRanks().size()/45+1)+": ");
 
         for (int i = 0; i < 45 && i < RankApi.getRanks().size(); i++) {
             Rank rank = RankApi.getRanks().get(i);

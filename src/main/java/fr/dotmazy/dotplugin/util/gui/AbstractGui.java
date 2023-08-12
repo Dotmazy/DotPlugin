@@ -1,5 +1,6 @@
 package fr.dotmazy.dotplugin.util.gui;
 
+import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.listeners.InventoryEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,11 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**@author Dotmazy */
-@SuppressWarnings("DuplicatedCode")
 abstract public class AbstractGui {
 
     private final Inventory inv;
     private Map<Integer, GuiItem> items;
+    private boolean isInit = false;
 
     public AbstractGui(){
         if(getType()!=GuiType.CHEST){
@@ -34,6 +35,11 @@ abstract public class AbstractGui {
      * Initialization of the gui.
      * */
     abstract protected void init();
+
+    /**
+     * @re
+     * */
+    protected int getTickDelay(){ return 1; };
 
     /**
      * @return The name of the gui.
@@ -57,21 +63,32 @@ abstract public class AbstractGui {
     /**
      * @return If the click event is canceled by default when gui open.
      * */
-    abstract protected boolean isDefaultCanceled();
+    abstract public boolean isDefaultCanceled();
 
     /**
      * @return The inventory.
      * */
     public Inventory getInventory(){
-        if(this.items != null){
+        if(!isInit){
+            isInit = true;
             for (int slot : items.keySet()) inv.setItem(slot, items.get(slot).getItem());
             if(isDefaultCanceled()) InventoryEvents.itemClickEvents.add(new ItemEvent(inv));
             for (int slot : items.keySet()) items.get(slot).create(inv, isDefaultCanceled());
-            items = null;
             InventoryEvents.openEvents.add(new InventoryEvent(this.inv, this::onOpen));
             InventoryEvents.closeEvents.add(new InventoryEvent(this.inv, this::onClose));
+            InventoryEvents.openEvents.add(new InventoryEvent(this.inv, this::onOpenForce));
+            InventoryEvents.closeEvents.add(new InventoryEvent(this.inv, this::onCloseForce));
+            DotPlugin.tickEvents.put(this, new TickEvent(this.inv, this::onTick));
         }
         return this.inv;
+    }
+
+    private void onOpenForce(Player player){
+        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player, true));
+    }
+
+    private void onCloseForce(Player player){
+        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player, false));
     }
 
     /**This function is call when open the inventory */
@@ -79,6 +96,9 @@ abstract public class AbstractGui {
 
     /**This function is call when close the inventory */
     protected void onClose(Player player){}
+
+    /**This function is call every tick */
+    protected void onTick(Player player){};
 
     /**
      * @param item The item to put.
@@ -111,6 +131,42 @@ abstract public class AbstractGui {
      * */
     protected void setItem(Material type, int slot){
         setItem(new GuiItem(type), slot);
+    }
+
+    /**
+     * @param item The item to put.
+     * @param slot The slot where put the item. (between 0 and size of the gui.
+     * <p></p>
+     * Put an item on a slot. (Only use in the onTick function)
+     * */
+    protected void setItemOnTick(GuiItem item, int slot){
+        if(slot<inv.getSize() && slot>=0){
+            items.put(slot, item);
+            item.setSlot(slot);
+            inv.setItem(slot, item.getItem());
+            item.create(inv, isDefaultCanceled());
+
+        }else throw new IllegalArgumentException("Slot number out of range (slot>size or slot<0).");
+    }
+
+    /**
+     * @param item The item to put.
+     * @param slot The slot where put the item. (between 0 and size of the gui)
+     * <p></p>
+     * Put an item on a slot. (Only use in the onTick function)
+     * */
+    protected void setItemOnTick(ItemStack item, int slot){
+        setItemOnTick(new GuiItem(item), slot);
+    }
+
+    /**
+     * @param type The type of the item to put.
+     * @param slot The slot where put the item. (between 0 and size of the gui)
+     * <p></p>
+     * Put an item on a slot. (Only use in the onTick function)
+     * */
+    protected void setItemOnTick(Material type, int slot){
+        setItemOnTick(new GuiItem(type), slot);
     }
 
     /**

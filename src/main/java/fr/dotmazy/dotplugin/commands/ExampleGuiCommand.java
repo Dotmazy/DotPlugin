@@ -1,6 +1,6 @@
 package fr.dotmazy.dotplugin.commands;
 
-import fr.dotmazy.dotplugin.gui.ExampleGui;
+import fr.dotmazy.dotplugin.gui.ExampleMultiGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +12,7 @@ public class ExampleGuiCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(sender instanceof Player player){
-            Inventory inv = new ExampleGui().getInventory();
+            Inventory inv = new ExampleMultiGui().getMainInventory();
             player.openInventory(inv);
         }
 

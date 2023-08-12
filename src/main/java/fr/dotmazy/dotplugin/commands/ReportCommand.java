@@ -39,12 +39,12 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
         }
 
         if(args.length < 2){
-            sender.sendMessage("§cPlease use this command: /report <player> <reason>");
+            sender.sendMessage("u00A7cPlease use this command: /report <player> <reason>");
             return true;
         }
 
         if(Bukkit.getPlayer(args[0])==null){
-            sender.sendMessage("§cInvalid player !");
+            sender.sendMessage("u00A7cInvalid player !");
             return true;
         }
 

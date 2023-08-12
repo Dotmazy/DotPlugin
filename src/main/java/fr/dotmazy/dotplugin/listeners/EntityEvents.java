@@ -28,7 +28,7 @@ public class EntityEvents implements Listener {
                 event.setCancelled(true);
                 ItemStack item = player.getInventory().getItemInMainHand();
                 assert item.getType() != Material.AIR;
-                if (item.getItemMeta().getDisplayName().equals("§cFreeze")){
+                if (item.getItemMeta().getDisplayName().equals("u00A7cFreeze")){
                     if (PlayerApi.isFreeze((Player)entity)){
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/freeze "+entity.getName());
                         player.sendMessage("You have freeze "+entity.getName());
@@ -36,7 +36,7 @@ public class EntityEvents implements Listener {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/unfreeze "+entity.getName());
                         player.sendMessage("You have unfreeze "+entity.getName());
                     }
-                }else if (item.getItemMeta().getDisplayName().equals("§cMute")){
+                }else if (item.getItemMeta().getDisplayName().equals("u00A7cMute")){
                     if (PlayerApi.isMute((Player)entity)){
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/mute "+entity.getName());
                         player.sendMessage("You have mute "+entity.getName());
@@ -44,7 +44,7 @@ public class EntityEvents implements Listener {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/unmute "+entity.getName());
                         player.sendMessage("You have unmute "+entity.getName());
                     }
-                }else if (item.getItemMeta().getDisplayName().equals("§cKnockback")){
+                }else if (item.getItemMeta().getDisplayName().equals("u00A7cKnockback")){
                     event.setCancelled(false);
                 }
             }

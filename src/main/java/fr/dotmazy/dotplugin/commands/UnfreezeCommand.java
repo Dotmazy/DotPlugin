@@ -39,12 +39,12 @@ public class UnfreezeCommand implements CommandExecutor, TabCompleter {
         }
 
         if(args.length < 1){
-            sender.sendMessage("§cPlease use this command: /unfreeze <player>");
+            sender.sendMessage("u00A7cPlease use this command: /unfreeze <player>");
             return true;
         }
 
         if(Bukkit.getPlayer(args[0])==null){
-            sender.sendMessage("§cInvalid player !");
+            sender.sendMessage("u00A7cInvalid player !");
             return true;
         }
 

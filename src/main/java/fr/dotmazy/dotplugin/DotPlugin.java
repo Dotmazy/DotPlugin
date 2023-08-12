@@ -4,6 +4,9 @@ import fr.dotmazy.dotplugin.api.TextApi;
 import fr.dotmazy.dotplugin.commands.*;
 import fr.dotmazy.dotplugin.configs.ConfigFile;
 import fr.dotmazy.dotplugin.listeners.*;
+import fr.dotmazy.dotplugin.util.gui.*;
+import fr.dotmazy.dotplugin.util.music.Music;
+import fr.dotmazy.dotplugin.util.music.PlayedMusic;
 import github.scarsz.discordsrv.DiscordSRV;
 
 import java.util.Objects;
@@ -12,9 +15,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -36,17 +41,23 @@ public class DotPlugin extends JavaPlugin implements Listener {
     public static List<Player> adminChatPlayers = new ArrayList<>();
     /** Don't use this (use api) <p></p>*/
     public static HashMap<String,ConfigFile> files = new HashMap<>();
+    public static Map<AbstractGui,TickEvent> tickEvents = new HashMap<>();
+    public static Map<Player,PlayedMusic> playMusics = new HashMap<>();
+    public static Map<Player,UUID> autoMusicPlayers = new HashMap<>();
 
     public void onEnable() {
         INSTANCE = this;
         getServer().getPluginManager().registerEvents(this, this);
         DiscordSRV.api.subscribe(discordSRVListener);
 
+
         saveDefaultConfig();
+        getConfig();
         TextApi.init(this);
         registerConfigFiles();
         registerCommands();
         registerEvents();
+        registerTickEvent();
         Bukkit.getLogger().addHandler(new LogEvent(this));
 
         System.out.println(files);
@@ -135,6 +146,22 @@ public class DotPlugin extends JavaPlugin implements Listener {
             dotPlugin.getPluginLoader().enablePlugin(dotPlugin);
             return true;
         }catch (Exception e){return false;}
+    }
+
+    private void registerTickEvent() {
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, ()->{
+            for(AbstractGui gui : tickEvents.keySet()) {
+                TickEvent event = tickEvents.get(gui);
+                for(Player player : Bukkit.getOnlinePlayers())
+                    if(event.isActive(player))
+                        event.getEvent().run(player);
+            }
+            for(Player player : playMusics.keySet())
+                if(playMusics.get(player)!=null){
+                    PlayedMusic playedMusic = playMusics.get(player);
+                    playMusics.replace(player,playedMusic.addTime(1));
+                }
+        }, 1, 0);
     }
 
 

@@ -23,6 +23,7 @@ public class InventoryEvents implements Listener {
 		Player player = (Player) event.getWhoClicked();
 		int number = event.getHotbarButton();
 
+		try {
 		for (ItemEvent itemEvent : itemClickEvents) {
 			if (event.getInventory() == itemEvent.getInventory() && !event.getSlotType().equals(InventoryType.SlotType.QUICKBAR))
 				if(itemEvent.getItem() == null) event.setCancelled(itemEvent.isCanceled());
@@ -31,6 +32,7 @@ public class InventoryEvents implements Listener {
 					if (itemEvent.getEvent() != null) itemEvent.getEvent().run(itemEvent.getItem(), player,number);
 				}
 		}
+		}catch(Exception ignore){}
 
 		if(!event.isCancelled()) event.setCancelled(PlayerApi.isInModerationMode((Player)event.getWhoClicked()));
 

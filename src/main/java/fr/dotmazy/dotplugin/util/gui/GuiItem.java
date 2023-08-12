@@ -53,7 +53,7 @@ public class GuiItem {
         this(new ItemStack(item));
     }
 
-    /**@deprecated Don't use this function (it's will break the system).*/
+    /**Don't use this function (it's will break the system).*/
     public void create(Inventory inventory, boolean cancelByDefault){
         registerEvent(inventory, onRightClick, rightClick, cancelByDefault);
         registerEvent(inventory, onShiftRightClick, shiftRightClick, cancelByDefault);
@@ -74,7 +74,7 @@ public class GuiItem {
         return this.item;
     }
 
-    /**@deprecated Don't use this function (it's will change nothing).*/
+    /**Don't use this function (it's will change nothing).*/
     public void setSlot(int slot){
         this.slot = slot;
     }

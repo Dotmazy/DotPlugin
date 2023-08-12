@@ -1,4 +1,4 @@
-package fr.dotmazy.dotplugin.gui;
+package fr.dotmazy.dotplugin.old;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,25 +31,25 @@ public class DisplayGui {
     }
 
     public static void openInventory(final Player player) {
-        inv = Bukkit.createInventory(null, 45, "§6Display: ");
+        inv = Bukkit.createInventory(null, 45, "u00A76Display: ");
         initializeItems();
         player.openInventory(inv);
     }
 
     public static void openBlockInventory(final Player player) {
-        blockinv = Bukkit.createInventory(null, 45, "§6§lBlock §r§6Display: ");
+        blockinv = Bukkit.createInventory(null, 45, "u00A76u00A7lBlock u00A7ru00A76Display: ");
         initializeBlockItems();
         player.openInventory(blockinv);
     }
 
     public static void openItemInventory(final Player player) {
-        iteminv = Bukkit.createInventory(null, 45, "§6§lItem §r§6Display: ");
+        iteminv = Bukkit.createInventory(null, 45, "u00A76u00A7lItem u00A7ru00A76Display: ");
         initializeItemItems();
         player.openInventory(iteminv);
     }
 
     public static void openTextInventory(final Player player) {
-        textinv = Bukkit.createInventory(null, 45, "§6§lText §r§6Display: ");
+        textinv = Bukkit.createInventory(null, 45, "u00A76u00A7lText u00A7ru00A76Display: ");
         initializeTextItems();
         player.openInventory(textinv);
     }*/

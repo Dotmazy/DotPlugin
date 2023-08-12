@@ -18,15 +18,16 @@ dependencies {
 }
 
 tasks.named('processResources', ProcessResources).configure {
-var replaceProperties = [
-        plugin_name: plugin_name, plugin_version: plugin_version, plugin_main: plugin_main, plugin_api_version: plugin_api_version, plugin_authors: plugin_authors
-]
+    var replaceProperties = [
+            plugin_name: plugin_name, plugin_version: plugin_version, plugin_main: plugin_main, plugin_api_version: plugin_api_version, plugin_authors: plugin_authors
+    ]
 
-inputs.properties replaceProperties
+    inputs.properties replaceProperties
 
-filesMatching(['plugin.yml']) {
-    expand replaceProperties + [project: project]
-}}
+    filesMatching(['plugin.yml']) {
+        expand replaceProperties + [project: project]
+    }
+}
 
 def targetJavaVersion = 20
 java {

@@ -2,7 +2,6 @@ package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.gui.DisplayGui;
 import fr.dotmazy.dotplugin.util.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -94,8 +93,8 @@ public class PlayerEvents implements Listener {
         Block block = event.getClickedBlock();
         ItemStack item = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName("§bDisplay wand");
-        meta.setLore(Arrays.asList("§8This is a wand to make or manage display entities.",""));
+        meta.setDisplayName("u00A7bDisplay wand");
+        meta.setLore(Arrays.asList("u00A78This is a wand to make or manage display entities.",""));
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addEnchant(Enchantment.PROTECTION_FALL, 1, false);
         item.setItemMeta(meta);
@@ -111,7 +110,7 @@ public class PlayerEvents implements Listener {
         if(PlayerApi.isInModerationMode(player) && entity instanceof Player){
             ItemStack item = player.getInventory().getItemInMainHand();
             assert item.getType() != Material.AIR;
-            if (item.getItemMeta().getDisplayName().equals("§cFreeze")){
+            if (item.getItemMeta().getDisplayName().equals("u00A7cFreeze")){
                 if (PlayerApi.isFreeze((Player)entity)){
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/freeze "+entity.getName());
                     player.sendMessage("You have freeze "+entity.getName());
@@ -119,7 +118,7 @@ public class PlayerEvents implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/unfreeze "+entity.getName());
                     player.sendMessage("You have unfreeze "+entity.getName());
                 }
-            }else if (item.getItemMeta().getDisplayName().equals("§cMute")){
+            }else if (item.getItemMeta().getDisplayName().equals("u00A7cMute")){
                 if (PlayerApi.isMute((Player)entity)){
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/mute "+entity.getName());
                     player.sendMessage("You have mute "+entity.getName());
@@ -127,7 +126,7 @@ public class PlayerEvents implements Listener {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/unmute "+entity.getName());
                     player.sendMessage("You have unmute "+entity.getName());
                 }
-            }else if (item.getItemMeta().getDisplayName().equals("§cKnockback")){
+            }else if (item.getItemMeta().getDisplayName().equals("u00A7cKnockback")){
                 entity.setVelocity(new Vector(1,1,0));
             }
         }

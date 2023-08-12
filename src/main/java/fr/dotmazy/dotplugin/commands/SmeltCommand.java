@@ -43,7 +43,7 @@ public class SmeltCommand implements CommandExecutor {
         }
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (item.getType() == Material.AIR) sender.sendMessage("§cThere are no item in your main hand !");
+        if (item.getType() == Material.AIR) sender.sendMessage("u00A7cThere are no item in your main hand !");
 
         FurnaceRecipe furnaceRecipe = new FurnaceRecipe(item, item.getType());
         Bukkit.getServer().addRecipe(furnaceRecipe);

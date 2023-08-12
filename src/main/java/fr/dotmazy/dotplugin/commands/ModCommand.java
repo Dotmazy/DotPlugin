@@ -47,9 +47,9 @@ public class ModCommand implements CommandExecutor {
             DotPlugin.modPlayers.put(player,player.getInventory().getContents());
             Inventory inv = player.getInventory();
             inv.clear();
-            inv.setItem(0,makeItem(Material.ICE, "§cFreeze", "Freeze player"));
-            inv.setItem(1,makeItem(Material.BARRIER, "§cMute", "Mute player"));
-            inv.setItem(2,makeItem(Material.GOLDEN_AXE, "§cKnockback", "Knockback player"));
+            inv.setItem(0,makeItem(Material.ICE, "u00A7cFreeze", "Freeze player"));
+            inv.setItem(1,makeItem(Material.BARRIER, "u00A7cMute", "Mute player"));
+            inv.setItem(2,makeItem(Material.GOLDEN_AXE, "u00A7cKnockback", "Knockback player"));
             PlayerApi.vanishPlayer(player);
             player.sendMessage("You are now in moderating mode.");
         } else {

@@ -4,7 +4,7 @@ import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.api.PermApi;
 import fr.dotmazy.dotplugin.api.RankApi;
 import fr.dotmazy.dotplugin.api.TextApi;
-import fr.dotmazy.dotplugin.gui.RankGui;
+import fr.dotmazy.dotplugin.old.RankGui;
 import fr.dotmazy.dotplugin.util.Rank;
 import java.lang.Object;
 import org.bukkit.Bukkit;
@@ -65,11 +65,11 @@ public class RankCommand implements CommandExecutor, TabCompleter {
         switch (option) {
             case "create":
                 if (args.length < 2){
-                    sender.sendMessage("§cPlease use this command: /rank create <name>");
+                    sender.sendMessage("u00A7cPlease use this command: /rank create <name>");
                     break;
                 }
                 if (RankApi.getRank(args[1])!=null){
-                    sender.sendMessage("§cThis rank already exist");
+                    sender.sendMessage("u00A7cThis rank already exist");
                     break;
                 }
                 if (args.length == 2){
@@ -117,26 +117,26 @@ public class RankCommand implements CommandExecutor, TabCompleter {
                 break;
             case "remove":
                 if (args.length < 2){
-                    sender.sendMessage("§cPlease use this command: /rank remove <name>");
+                    sender.sendMessage("u00A7cPlease use this command: /rank remove <name>");
                     break;
                 }
                 if(!RankApi.removeRank(RankApi.getRank(args[1]))){
-                    sender.sendMessage("§cThis rank doesn't exist");
+                    sender.sendMessage("u00A7cThis rank doesn't exist");
                     break;
                 }
                 sender.sendMessage("You have successfully removed the rank "+args[1]);
                 break;
             case "join":
                 if (args.length < 3){
-                    sender.sendMessage("§cPlease use this command: /rank join <player> <name>");
+                    sender.sendMessage("u00A7cPlease use this command: /rank join <player> <name>");
                     break;
                 }
                 if (player == null){
-                    sender.sendMessage("§cThis player is invalid or not online");
+                    sender.sendMessage("u00A7cThis player is invalid or not online");
                     break;
                 }
                 if(RankApi.getRank(args[2])==null){
-                    sender.sendMessage("§cThis rank doesn't exist");
+                    sender.sendMessage("u00A7cThis rank doesn't exist");
                     break;
                 }
                 PlayerApi.joinRank(player,RankApi.getRank(args[2]));
@@ -144,11 +144,11 @@ public class RankCommand implements CommandExecutor, TabCompleter {
                 break;
             case "modify":
                 if (args.length < 4){
-                    sender.sendMessage("§cPlease use this command: /rank modify <name> [name,prefix,suffix,perms,addperm,removeperm] <value(s)>");
+                    sender.sendMessage("u00A7cPlease use this command: /rank modify <name> [name,prefix,suffix,perms,addperm,removeperm] <value(s)>");
                     break;
                 }
                 if(RankApi.getRank(args[1])==null){
-                    sender.sendMessage("§cThis rank doesn't exist");
+                    sender.sendMessage("u00A7cThis rank doesn't exist");
                 }
                 Rank rank = RankApi.getRank(args[1]);
                 switch (args[2]){
@@ -183,18 +183,18 @@ public class RankCommand implements CommandExecutor, TabCompleter {
                         break;
                     case "addperm":
                         if (!RankApi.addPerm(RankApi.getRank(args[1]),args[3])){
-                            sender.sendMessage("§cThis rank already exist or already have this perm");
+                            sender.sendMessage("u00A7cThis rank already exist or already have this perm");
                             break;
                         }
                         break;
                     case "removeperm":
                         if (!RankApi.removePerm(RankApi.getRank(args[1]),args[3])){
-                            sender.sendMessage("§cThis rank doen't exist or haven't this perm");
+                            sender.sendMessage("u00A7cThis rank doen't exist or haven't this perm");
                             break;
                         }
                         break;
                     default:
-                        sender.sendMessage("§cPlease use this command: /rank modify <name> [name,prefix,suffix,perms,addperm,removeperm] <value(s)>");
+                        sender.sendMessage("u00A7cPlease use this command: /rank modify <name> [name,prefix,suffix,perms,addperm,removeperm] <value(s)>");
                         break;
                 }
                 break;
@@ -202,7 +202,7 @@ public class RankCommand implements CommandExecutor, TabCompleter {
                 StringBuilder message = new StringBuilder("Here is a list of all ranks:\n");
                 for (Rank rankc : RankApi.getRanks()){
                     message
-                            .append("§r- ")
+                            .append("u00A7r- ")
                             .append(rankc.getName())
                             .append(" ")
                             .append(ChatColor.translateAlternateColorCodes('&',rankc.getPrefix()))

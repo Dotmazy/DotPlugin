@@ -1,13 +1,13 @@
 package fr.dotmazy.dotplugin;
 
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import fr.dotmazy.dotplugin.commands.*;
-import fr.dotmazy.dotplugin.configs.ConfigFile;
+import fr.dotmazy.dotplugin.util.ConfigFile;
 import fr.dotmazy.dotplugin.listeners.*;
+import fr.dotmazy.dotplugin.util.Api;
+import fr.dotmazy.dotplugin.util.Database;
 import fr.dotmazy.dotplugin.util.gui.*;
-import fr.dotmazy.dotplugin.util.music.Music;
 import fr.dotmazy.dotplugin.util.music.PlayedMusic;
-import github.scarsz.discordsrv.DiscordSRV;
 
 import java.util.Objects;
 
@@ -15,60 +15,44 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class DotPlugin extends JavaPlugin implements Listener {
+public class DotPlugin extends JavaPlugin {
     private static DotPlugin INSTANCE;
-    private final DiscordSRVListener discordSRVListener = new DiscordSRVListener(this);
+    //private final DiscordSRVListener discordSRVListener = new DiscordSRVListener(this);
 
-    /** Don't use this (use api) <p></p>*/
-    public static List<String> perms = new ArrayList<>();
-    /** Don't use this (use api) <p></p>*/
     public static List<Player> mutePlayers = new ArrayList<>();
-    /** Don't use this (use api) <p></p>*/
     public static List<Player> freezePlayers = new ArrayList<>();
-    /** Don't use this (use api) <p></p>*/
     public static Map<Player, ItemStack[]> modPlayers = new HashMap<>();
-    /** Don't use this (use api) <p></p>*/
     public static List<Player> vanishedPlayers = new ArrayList<>();
-    /** Don't use this (use api) <p></p>*/
     public static List<Player> adminChatPlayers = new ArrayList<>();
-    /** Don't use this (use api) <p></p>*/
-    public static HashMap<String,ConfigFile> files = new HashMap<>();
     public static Map<AbstractGui,TickEvent> tickEvents = new HashMap<>();
     public static Map<Player,PlayedMusic> playMusics = new HashMap<>();
     public static Map<Player,UUID> autoMusicPlayers = new HashMap<>();
 
     public void onEnable() {
+        System.out.println("-----------------------------Enabling DotPlugin-------------------------------");
         INSTANCE = this;
-        getServer().getPluginManager().registerEvents(this, this);
-        DiscordSRV.api.subscribe(discordSRVListener);
-
+        //DiscordSRV.api.subscribe(discordSRVListener);
 
         saveDefaultConfig();
-        getConfig();
         TextApi.init(this);
-        registerConfigFiles();
+
         registerCommands();
         registerEvents();
         registerTickEvent();
-        Bukkit.getLogger().addHandler(new LogEvent(this));
 
-        System.out.println(files);
-        for (String key : files.get("players").get().getKeys(false)){
-            if(files.get("players").get().getBoolean(key+".mute")) mutePlayers.add(Bukkit.getPlayer(UUID.fromString(key)));
-            if(files.get("players").get().getBoolean(key+".freeze")) freezePlayers.add(Bukkit.getPlayer(UUID.fromString(key)));
-        }
+        if(Database.getConnection()!=null && Database.initDatabase()) System.out.println("Database connected and initialized successfully !");
+
+        for(Player player : Bukkit.getOnlinePlayers()) Api.Player.updatePerms(player);
+        for(ConfigFile config : ConfigFile.getConfigs()) config.setup();
     }
 
     public void onDisable() {
-        DiscordSRV.api.unsubscribe(discordSRVListener);
+        //DiscordSRV.api.unsubscribe(discordSRVListener);
         saveAll();
     }
 
@@ -111,39 +95,20 @@ public class DotPlugin extends JavaPlugin implements Listener {
         registerEvent(new PlayerEvents(this));
         registerEvent(new InventoryEvents());
         registerEvent(new BlockEvents(this));
-    }
 
-    private void registerConfigFiles() {
-        registerFile("ranks")
-                .addDefault("admin.prefix", "&c[Admin] &r")
-                .addDefault("admin.suffix", "")
-                .addDefault("admin.permissions", new String[]{"*"}).save();
-        registerFile("players").save();
-        registerFile("worlds").save();
-        registerFile("items")
-                .addDefault("example.name", "&2Example")
-                .addDefault("example.material", "diamond")
-                .addDefault("example.lore", new String[]{"&7Example lore 1","&7Example lore 2"})
-                .addDefault("example.enchants.sharpness", 3)
-                .addDefault("example.name", "&2Example")
-                .save();
-        registerFile("hypixelitems").save();
+        Bukkit.getLogger().addHandler(new LogEvent(this));
     }
 
     public static void saveAll(){
-        for (Map.Entry<String, ConfigFile> entry : files.entrySet()) {
-            ConfigFile value = entry.getValue();
-            value.save();
-        }
+        for(ConfigFile config : ConfigFile.getConfigs()) config.save();
     }
 
     public static boolean reload(){
         try {
-            Plugin dotPlugin = Bukkit.getPluginManager().getPlugin("DotPlugin");
-            for(ConfigFile file : files.values()){ file.reload(); }
-            dotPlugin.reloadConfig();
-            dotPlugin.getPluginLoader().disablePlugin(dotPlugin);
-            dotPlugin.getPluginLoader().enablePlugin(dotPlugin);
+            for(ConfigFile file : ConfigFile.getConfigs()) file.reload();
+            getInstance().reloadConfig();
+            getInstance().getPluginLoader().disablePlugin(getInstance());
+            getInstance().getPluginLoader().enablePlugin(getInstance());
             return true;
         }catch (Exception e){return false;}
     }
@@ -174,14 +139,8 @@ public class DotPlugin extends JavaPlugin implements Listener {
             Objects.requireNonNull(getServer().getPluginCommand(name)).setTabCompleter((TabCompleter)executor);}catch(Exception ignored){}
     }
 
-    private ConfigFile registerFile(String fileName){
-        ConfigFile file = new ConfigFile(fileName);
-        file.setup();
-        file.get().options().copyDefaults(true);
-        files.put(fileName,file);
-        return files.get(fileName);
+    public static DotPlugin getInstance(){
+        return INSTANCE;
     }
-
-    public static DotPlugin getInstance(){ return INSTANCE; }
 
 }

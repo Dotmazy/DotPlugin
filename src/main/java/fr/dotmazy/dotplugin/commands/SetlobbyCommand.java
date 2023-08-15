@@ -1,10 +1,12 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.CommandApi;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.CommandApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +36,7 @@ public class SetlobbyCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.lobby.set","dotplugin.lobby.*"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.lobby.set","dotplugin.lobby.*"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

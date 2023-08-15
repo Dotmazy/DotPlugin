@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -37,7 +39,7 @@ public class SmeltCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        if (!(PlayerApi.hasPerms((Player) sender,"dotplugin.smelt"))){
+        if (!(Api.Player.hasPerms(player,"dotplugin.smelt"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

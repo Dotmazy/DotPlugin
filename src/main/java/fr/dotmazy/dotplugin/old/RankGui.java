@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.dotmazy.dotplugin.api.RankApi;
+import fr.dotmazy.dotplugin.old.api.RankApi;
 import fr.dotmazy.dotplugin.util.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

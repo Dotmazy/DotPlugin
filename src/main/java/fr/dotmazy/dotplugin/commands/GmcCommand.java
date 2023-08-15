@@ -1,8 +1,9 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.CommandUtil;
 import java.lang.Object;
 import org.bukkit.Bukkit;
@@ -33,11 +34,10 @@ public class GmcCommand extends CommandUtil implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.gamemode.*","dotplugin.gamemode.creative"))){
+        if (sender instanceof Player player && !(Api.Player.hasOneOfPerms(player,"dotplugin.gamemode.*","dotplugin.gamemode.creative"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
-
         Player player = Bukkit.getPlayer(!(args.length >= 1)?"":args[0]);
         if ((!(sender instanceof Player) && player == null) || ((!(args.length >= 1)?"":args[0]) != null && player == null)){
             sender.sendMessage(TextApi.getTranslateConfig("commands.gamemode.invalidPlayer",options));

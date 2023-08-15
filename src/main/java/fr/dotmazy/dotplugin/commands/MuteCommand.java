@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -35,7 +37,7 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.mute"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.mute"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
@@ -54,10 +56,13 @@ public class MuteCommand implements CommandExecutor, TabCompleter {
         options.put("mute_player",player);
 
         assert player != null;
-        if(PlayerApi.mutePlayer(player))
-            sender.sendMessage(TextApi.getTranslateConfig("commands.mute.successfullyMute",options));
-        else
-            sender.sendMessage(TextApi.getTranslateConfig("commands.mute.alreadyMute",options));
+        if(Api.Player.isMute(player)) {
+            Api.Player.setMute(player,true);
+            sender.sendMessage(TextApi.getTranslateConfig("commands.mute.successfullyMute", options));
+        }else{
+            Api.Player.setMute(player,false);
+            sender.sendMessage(TextApi.getTranslateConfig("commands.mute.alreadyMute", options));
+        }
 
         return true;
     }

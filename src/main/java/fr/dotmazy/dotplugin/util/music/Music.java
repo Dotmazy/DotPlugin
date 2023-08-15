@@ -161,7 +161,7 @@ public class Music {
     private static void autoMusic(Player player, boolean isFirst){
         if(!isFirst || !DotPlugin.autoMusicPlayers.containsKey(player)){
             Music chosenMusic = Music.getRandomMusic(player);
-            player.sendMessage("[Auto music]: Start music "+chosenMusic.getName());
+            player.sendMessage("\u00A76[Auto music]: \u00A77Start music "+chosenMusic.getName());
             player.stopSound(SoundCategory.MASTER);
             player.playSound(player.getLocation(), "music.game."+chosenMusic.getMusic(), 100, 1);
             if(DotPlugin.playMusics.containsKey(player)) DotPlugin.playMusics.replace(player,new PlayedMusic(chosenMusic));

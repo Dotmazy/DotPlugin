@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -50,12 +52,12 @@ public class ModCommand implements CommandExecutor {
             inv.setItem(0,makeItem(Material.ICE, "u00A7cFreeze", "Freeze player"));
             inv.setItem(1,makeItem(Material.BARRIER, "u00A7cMute", "Mute player"));
             inv.setItem(2,makeItem(Material.GOLDEN_AXE, "u00A7cKnockback", "Knockback player"));
-            PlayerApi.vanishPlayer(player);
+            Api.Player.setVanish(player, true);
             player.sendMessage("You are now in moderating mode.");
         } else {
             player.getInventory().setContents(DotPlugin.modPlayers.get(player));
             DotPlugin.modPlayers.remove(player);
-            PlayerApi.unvanishPlayer(player);
+            Api.Player.setVanish(player, false);
             player.sendMessage("You are now in normal mode.");
         }
         return true;

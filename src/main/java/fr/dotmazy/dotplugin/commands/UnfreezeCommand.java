@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +35,7 @@ public class UnfreezeCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.*","dotplugin.unfreeze"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.*","dotplugin.unfreeze"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
@@ -51,10 +53,12 @@ public class UnfreezeCommand implements CommandExecutor, TabCompleter {
         Player player = Bukkit.getPlayer(args[0]);
 
         assert player != null;
-        if(PlayerApi.unfreezePlayer(player))
-            sender.sendMessage("You have successfully unfreeze "+player.getName());
-        else
-            sender.sendMessage("An error occurred when unfreeze "+player.getName());
+        if(!Api.Player.isFreeze(player)) {
+            Api.Player.setFreeze(player,false);
+            sender.sendMessage("You have successfully unfreeze " + player.getName());
+        }else {
+            sender.sendMessage(player.getName() + " is not freeze");
+        }
 
         return true;
     }

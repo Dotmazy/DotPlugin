@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -33,7 +35,7 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.*","dotplugin.report"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.*","dotplugin.report"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
@@ -56,10 +58,8 @@ public class ReportCommand implements CommandExecutor, TabCompleter {
         }
 
         assert player != null;
-        if(PlayerApi.warnPlayer(player, reason.toString()))
-            sender.sendMessage("You have successfully report "+player.getName()+" for reason "+reason);
-        else
-            sender.sendMessage("An error occurred when report "+player.getName());
+        Api.Player.warn(player, reason.toString());
+        sender.sendMessage("You have successfully report " + player.getName() + " for reason " + reason);
 
         return true;
     }

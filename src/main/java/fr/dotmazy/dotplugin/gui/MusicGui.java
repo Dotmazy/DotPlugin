@@ -1,8 +1,9 @@
 package fr.dotmazy.dotplugin.gui;
 
 import fr.dotmazy.dotplugin.DotPlugin;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.music.Music;
-import fr.dotmazy.dotplugin.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
 import fr.dotmazy.dotplugin.util.gui.AbstractGui;
 import fr.dotmazy.dotplugin.util.gui.AbstractMultiGui;
 import fr.dotmazy.dotplugin.util.gui.GuiItem;
@@ -13,7 +14,6 @@ import fr.dotmazy.dotplugin.util.raw.ClickEvent;
 import fr.dotmazy.dotplugin.util.raw.Component;
 import fr.dotmazy.dotplugin.util.raw.RawBuilder;
 import org.bukkit.Material;
-import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class MusicGui extends AbstractMultiGui {
                 player.playSound(player.getLocation(),"music.game."+music.getMusic(),100,1);
                 DotPlugin.playMusics.put(player,new PlayedMusic(music));
             }, true).onRightClick((item, player, number) -> {
-                PlayerApi.sendRawMessage(player, new RawBuilder()
+                Api.Player.sendRawMessage(player, new RawBuilder()
                         .addComponent(new Component("Here is the url of the music "+music.getName()+": "))
                         .addComponent(new Component("https://www.youtube.com/watch?v="+music.getYoutubeVideo()).setColor("#63a5ee").setUnderlined(true).setEvent(new ClickEvent(Action.OPEN_URL,"https://www.youtube.com/watch?v="+music.getYoutubeVideo()))
                         ));

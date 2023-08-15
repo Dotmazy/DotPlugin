@@ -1,7 +1,7 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

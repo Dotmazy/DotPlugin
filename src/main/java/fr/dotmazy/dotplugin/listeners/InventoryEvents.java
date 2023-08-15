@@ -1,6 +1,6 @@
 package fr.dotmazy.dotplugin.listeners;
 
-import fr.dotmazy.dotplugin.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
 import fr.dotmazy.dotplugin.util.gui.InventoryEvent;
 import fr.dotmazy.dotplugin.util.gui.ItemEvent;
 import org.bukkit.entity.Player;

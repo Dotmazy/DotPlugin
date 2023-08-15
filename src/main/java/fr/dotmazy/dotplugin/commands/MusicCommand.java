@@ -1,15 +1,14 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.music.Music;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 
 import java.lang.Object;
 
 import fr.dotmazy.dotplugin.gui.MusicGui;
-import fr.dotmazy.dotplugin.util.music.PlayedMusic;
-import org.bukkit.Bukkit;
-import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,18 +34,18 @@ public class MusicCommand implements CommandExecutor, TabCompleter {
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );
-        /*if (!dotPlugin.getConfig().getBoolean("commands.music.enable")){
+        if (!dotPlugin.getConfig().getBoolean("commands.music.enable")){
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
-        }*/
+        }
         if (!(sender instanceof Player player)) {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        /*if (!(PlayerApi.hasPerms(player,"dotplugin.music"))){
+        if (!(Api.Player.hasPerms(player,"dotplugin.music"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
-        }*/
+        }
 
         if (args.length > 0){
             if(args[0].equals("auto")) Music.toggleAutoMusic(player);

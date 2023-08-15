@@ -1,7 +1,7 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +36,8 @@ public class AdminChatCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.adminchat",options));
             return true;
         }
-        if (DotPlugin.adminChatPlayers.contains((Player)sender)) {
+
+        if (DotPlugin.adminChatPlayers.contains(player)) {
             DotPlugin.adminChatPlayers.add(player);
             sender.sendMessage(TextApi.getTranslateConfig("commands.adminchat.enableMessage",options));
         } else {

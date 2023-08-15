@@ -1,9 +1,10 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.CommandApi;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.CommandApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.CommandUtil;
 import java.lang.Object;
 import org.bukkit.Bukkit;
@@ -39,7 +40,7 @@ public class WarpCommand extends CommandUtil implements CommandExecutor, TabComp
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.*","dotplugin.spawn.tp","dotplugin.spawn.*"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.*","dotplugin.spawn.tp","dotplugin.spawn.*"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
@@ -61,7 +62,7 @@ public class WarpCommand extends CommandUtil implements CommandExecutor, TabComp
             return true;
         }
         options.put("warp_name",args[0]);
-        if (!PlayerApi.hasPerms(player,"dotplugin.warp.noWait")){
+        if (!Api.Player.hasPerms(player,"dotplugin.warp.noWait")){
             Location loc = player.getLocation();
             sender.sendMessage(TextApi.getTranslateConfig("commands.warp.waitMessage",options));
             Bukkit.getScheduler().runTaskLater(dotPlugin,() -> {

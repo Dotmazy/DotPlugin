@@ -1,10 +1,10 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PermApi;
-import fr.dotmazy.dotplugin.api.RankApi;
-import fr.dotmazy.dotplugin.api.TextApi;
-import fr.dotmazy.dotplugin.old.RankGui;
+import fr.dotmazy.dotplugin.gui.RankGui;
+import fr.dotmazy.dotplugin.old.api.PermApi;
+import fr.dotmazy.dotplugin.old.api.RankApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import fr.dotmazy.dotplugin.util.Rank;
 import java.lang.Object;
 import org.bukkit.Bukkit;
@@ -42,12 +42,12 @@ public class RankCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
 
-        RankGui.openInventory((Player) sender);
+        player.openInventory(new RankGui().getMainInventory());
 
         /*if(args.length < 1){
             sender.sendMessage("Please use this command:\n/rank ["+(!PlayerApi.hasPerm(sender,"dotplugin.ranks.create")?"create":""+",remove,join,list]"));

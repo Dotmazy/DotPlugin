@@ -1,13 +1,16 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.minidns.record.A;
 
 import java.util.Map;
 
@@ -33,15 +36,16 @@ public class VanishCommand implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.onlyPlayerCommandMessage",options));
             return true;
         }
-        if (!(PlayerApi.hasPerms((Player) sender,"dotplugin.*","dotplugin.vanish"))){
+        if (!(Api.Player.hasPerms(player,"dotplugin.*","dotplugin.vanish"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
 
-        if (PlayerApi.vanishPlayer(player)) {
+        if (!Api.Player.isVanish(player)) {
+            Api.Player.setVanish(player, true);
             sender.sendMessage((args.length>=1?args[0]:"") == null?"You":player.getName()+" are now vanished.");
         }else{
-            PlayerApi.unvanishPlayer(player);
+            Api.Player.setVanish(player, false);
             sender.sendMessage((args.length>=1?args[0]:"") == null?"You":player.getName()+" are now unvanished.");
         }
         return true;

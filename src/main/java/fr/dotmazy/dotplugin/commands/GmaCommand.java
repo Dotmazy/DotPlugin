@@ -1,7 +1,8 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.CommandUtil;
 import java.lang.Object;
 import org.bukkit.Bukkit;
@@ -32,7 +33,7 @@ public class GmaCommand extends CommandUtil implements CommandExecutor {
             sender.sendMessage(TextApi.getTranslateConfig("commands.commandDisableMessage",options));
             return true;
         }
-        if (!(sender.hasPermission("dotplugin.gamemode.*") || sender.hasPermission("dotplugin.gamemode.adventure"))){
+        if (sender instanceof Player player && !(Api.Player.hasOneOfPerms(player, "dotplugin.gamemode.*", "dotplugin.gamemode.adventure"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }

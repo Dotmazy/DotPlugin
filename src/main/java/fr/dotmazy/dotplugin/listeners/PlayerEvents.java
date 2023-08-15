@@ -1,7 +1,8 @@
 package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.util.Api;
 import fr.dotmazy.dotplugin.util.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
+import org.minidns.record.A;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +36,13 @@ public class PlayerEvents implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         String message = event.getMessage();
-        player.addAttachment(dotPlugin, "", true);
+        String prefix = Api.Player.getPrefix(player);
+        String suffix = Api.Player.getSuffix(player);
         if(DotPlugin.perms.contains(player)){
             event.setCancelled(true);
             for (Player pl : Bukkit.getOnlinePlayers()){
                 if (pl.hasPermission("dotplugin.adminchat")){
-                    pl.sendMessage("(AdminChat) "+PlayerApi.getRankOfPlayer(player).getPrefix()+player.getName()+PlayerApi.getRankOfPlayer(player).getSuffix()+": ");
+                    pl.sendMessage("(AdminChat) "+prefix+player.getName()+suffix+": ");
                 }
             }
         }else{
@@ -49,8 +52,6 @@ public class PlayerEvents implements Listener {
             }else if (player.hasPermission("dotplugin.chatColor")){
                 event.setMessage(ChatColor.translateAlternateColorCodes('&', message));
             }
-            String prefix = PlayerApi.getRankOfPlayer(player).getPrefix();
-            String suffix = PlayerApi.getRankOfPlayer(player).getSuffix();
             event.setFormat(ChatColor.translateAlternateColorCodes('&',
                     (prefix==null?"":prefix)+
                             player.getName()+
@@ -62,22 +63,23 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
-        Rank rank = PlayerApi.getRankOfPlayer(player);
-        List<String> perms = rank.getPermissions();
 
-        for (String perm : perms){
-            player.addAttachment(dotPlugin,perm,true);
-        }
+        Api.Player.setOnline(player, true);
+        if(Api.Player.exist(player)) player.sendMessage("Welcome to the server "+player.getServer().getName());
+        Api.Player.create(player);
+        Api.Player.updatePerms(player);
+        if(Api.Player.isFreeze(player)) DotPlugin.freezePlayers.add(player);
+        if(Api.Player.isMute(player)) DotPlugin.vanishedPlayers.add(player);
 
-        for (Player pl : DotPlugin.vanishedPlayers){
+        for (Player pl : DotPlugin.vanishedPlayers)
             event.getPlayer().hidePlayer(pl);
-        }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event){
         Player player = event.getPlayer();
         DotPlugin.vanishedPlayers.remove(player);
+        Api.Player.setOnline(player, false);
     }
 
     @EventHandler
@@ -111,7 +113,7 @@ public class PlayerEvents implements Listener {
             ItemStack item = player.getInventory().getItemInMainHand();
             assert item.getType() != Material.AIR;
             if (item.getItemMeta().getDisplayName().equals("u00A7cFreeze")){
-                if (PlayerApi.isFreeze((Player)entity)){
+                if (Api.Player.isFreeze((Player)entity)){
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/freeze "+entity.getName());
                     player.sendMessage("You have freeze "+entity.getName());
                 }else{
@@ -119,7 +121,7 @@ public class PlayerEvents implements Listener {
                     player.sendMessage("You have unfreeze "+entity.getName());
                 }
             }else if (item.getItemMeta().getDisplayName().equals("u00A7cMute")){
-                if (PlayerApi.isMute((Player)entity)){
+                if (Api.Player.isMute((Player)entity)){
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/mute "+entity.getName());
                     player.sendMessage("You have mute "+entity.getName());
                 }else{

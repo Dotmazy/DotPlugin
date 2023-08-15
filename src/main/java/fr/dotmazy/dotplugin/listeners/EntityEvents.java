@@ -1,7 +1,8 @@
 package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -20,16 +21,14 @@ public class EntityEvents implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(org.bukkit.event.entity.EntityDamageByEntityEvent event) {
-        Entity damager = event.getDamager();
         Entity entity = event.getEntity();
-        if(damager instanceof Player){
-            Player player = (Player) damager;
+        if(event.getDamager() instanceof Player player){
             if (DotPlugin.modPlayers.get(player)!=null && entity instanceof Player) {
                 event.setCancelled(true);
                 ItemStack item = player.getInventory().getItemInMainHand();
                 assert item.getType() != Material.AIR;
                 if (item.getItemMeta().getDisplayName().equals("u00A7cFreeze")){
-                    if (PlayerApi.isFreeze((Player)entity)){
+                    if (Api.Player.isFreeze((Player)entity)){
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/freeze "+entity.getName());
                         player.sendMessage("You have freeze "+entity.getName());
                     }else{
@@ -37,7 +36,7 @@ public class EntityEvents implements Listener {
                         player.sendMessage("You have unfreeze "+entity.getName());
                     }
                 }else if (item.getItemMeta().getDisplayName().equals("u00A7cMute")){
-                    if (PlayerApi.isMute((Player)entity)){
+                    if (Api.Player.isMute((Player)entity)){
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"/mute "+entity.getName());
                         player.sendMessage("You have mute "+entity.getName());
                     }else{

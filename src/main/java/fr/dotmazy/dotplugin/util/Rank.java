@@ -1,6 +1,6 @@
 package fr.dotmazy.dotplugin.util;
 
-import fr.dotmazy.dotplugin.api.PermApi;
+import fr.dotmazy.dotplugin.old.api.PermApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;

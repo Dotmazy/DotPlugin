@@ -1,10 +1,12 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.CommandApi;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.CommandApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -31,7 +33,7 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
                 "player", sender instanceof Player?(Player)sender:null,
                 "world", sender instanceof Player?((Player) sender).getWorld():null
         );
-        if (sender instanceof Player && !(PlayerApi.hasPerms((Player) sender,"dotplugin.*","dotplugin.spawn.tp","dotplugin.spawn.*"))){
+        if (sender instanceof Player player && !(Api.Player.hasPerms(player,"dotplugin.*","dotplugin.spawn.tp","dotplugin.spawn.*"))){
             sender.sendMessage(TextApi.getTranslateConfig("commands.noPermissionMessage",options));
             return true;
         }
@@ -43,7 +45,7 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
 
         Location spawn = CommandApi.getSpawn(player.getWorld());
 
-        if (!PlayerApi.hasPerms(player,"dotplugin.spawn.noWait")){
+        if (!Api.Player.hasPerms(player,"dotplugin.spawn.noWait")){
             Location loc = player.getLocation();
             sender.sendMessage("Please wait "+dotPlugin.getConfig().getInt("spawnCommandWaitTime")+" sec without move.");
             Bukkit.getScheduler().runTaskLater(dotPlugin,() -> {

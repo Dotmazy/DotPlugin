@@ -1,9 +1,11 @@
 package fr.dotmazy.dotplugin.commands;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.api.PlayerApi;
-import fr.dotmazy.dotplugin.api.TextApi;
+import fr.dotmazy.dotplugin.old.api.PlayerApi;
+import fr.dotmazy.dotplugin.old.api.TextApi;
 import java.lang.Object;
+
+import fr.dotmazy.dotplugin.util.Api;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -51,7 +53,7 @@ public class FreezeCommand implements CommandExecutor, TabCompleter {
         Player player = Bukkit.getPlayer(args[0]);
 
         assert player != null;
-        if(PlayerApi.freezePlayer(player))
+        if(Api.Player.isFreeze(player))
             sender.sendMessage(TextApi.getTranslateConfig("commands.freeze.successfullyFreezeMessage",options));
         else
             sender.sendMessage(TextApi.getTranslateConfig("commands.freeze.errorWhenFreezeMessage",options));

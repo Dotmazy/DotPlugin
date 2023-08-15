@@ -1,0 +1,8 @@
+example:
+  name: "&2Example"
+  material: "diamond"
+  lore:
+    - "&7Example lore 1"
+    - "&7Example lore 2"
+  enchants:
+    sharpness: 3

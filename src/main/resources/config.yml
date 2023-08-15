@@ -17,22 +17,6 @@ discordInviteLink: "https://discord.gg/4FQWPUwcEP"
 # dotplugin.*
 # dotplugin.commands.adminchat
 # dotplugin.commands.craft
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 
 commands:
   onlyPlayerCommandMessage: "&cThis command can only send by a player !"
@@ -44,9 +28,6 @@ commands:
 
   music:
     enable: true
-    gui:
-      "minecraft:music.game.ne-rage-quitte-pas": "§bNe rage quitte pas"
-      "minecraft:music.game.": ""
 
   spawn:
     enable: true

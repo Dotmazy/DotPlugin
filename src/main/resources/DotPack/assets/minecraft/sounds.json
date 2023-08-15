@@ -1,0 +1,389 @@
+{
+  "music.game.noel-pour-toi-cest-mort": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/noel-pour-toi-cest-mort",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.latence": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/latence",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.zone-pvp": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/zone-pvp",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.le-tresor": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/le-tresor",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.prends-ton-arme": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/prends-ton-arme",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.teube": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/teube",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.nul-a-chier": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/nul-a-chier",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.ton-destin": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/ton-destin",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.pioche-pioche-pioche": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/pioche-pioche-pioche",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.ta-maison": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/ta-maison",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.non-te-cache-pas": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/non-te-cache-pas",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.jai-la-dalle": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/jai-la-dalle",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.ce-soir": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/ce-soir",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.court-metrage-musicale": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/court-metrage-musicale",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.dans-la-nuit": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/dans-la-nuit",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.herobrine": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/herobrine",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.jaimerais-trop-quil-creve": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/jaimerais-trop-quil-creve",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.jai-sombre": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/jai-sombre",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.jarrive-pas-a-pecho": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/jarrive-pas-a-pecho",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.jean-kevin": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/jean-kevin",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.je-construis-ma-maison": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/je-construis-ma-maison",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.je-toublierais-jamais": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/je-toublierais-jamais",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.la-pire-des-teams": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/la-pire-des-teams",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.ma-pelle": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/ma-pelle",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.marie-a-un-creeper": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/marie-a-un-creeper",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.mon-diams-ou-tes": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/mon-diams-ou-tes",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.pas-lniveau": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/pas-lniveau",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.pgm": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/pgm",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.plus-tard": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/plus-tard",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.yen-a-marre-dhalloween": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/yen-a-marre-dhalloween",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.tu-as-explose": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/tu-as-explose",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.tout-casser": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/tout-casser",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.toi-et-moi": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/toi-et-moi",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.sur-ma-map": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/sur-ma-map",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.sur-blood-symphony": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/sur-blood-symphony",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.save-me": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/save-me",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.roots-noob": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/roots-noob",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.redstone": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/redstone",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.popopop-bloc-par-bloc": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/popopop-bloc-par-bloc",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.enderman": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/enderman",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.zombie": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/zombie",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.ne-rage-quitte-pas": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/ne-rage-quitte-pas",
+        "stream": true
+      }
+    ]
+  },
+  "music.game.le-temp-dun-reve": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "music/le-temp-dun-reve",
+        "stream": true
+      }
+    ]
+  }
+}

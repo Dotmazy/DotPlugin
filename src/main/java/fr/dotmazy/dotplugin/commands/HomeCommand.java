@@ -53,7 +53,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
             home = "home";
         else home = args[0];
 
-        Location warp = PlayerApi.getHome(player, home);
+        Location warp = null;//PlayerApi.getHome(player, home);
 
         if (warp==null){
             sender.sendMessage(TextApi.getTranslateConfig("commands.home.unknownHome",options));

@@ -16,8 +16,8 @@ public class ExampleMultiGui extends AbstractMultiGui {
 
     private class ExampleGui1 extends AbstractGui {
         protected void init() {
-            setItem(new GuiItem(Material.STICKY_PISTON).onLeftClick((item,player,number)->{
-                player.openInventory(guis.get(1).getInventory());
+            setItem(new GuiItem(Material.STICKY_PISTON).onLeftClick((item,player,number, slot)->{
+                player.get().openInventory(guis.get(1).getInventory());
             }, true).setDisplayName("\u00A7aNext"),26);
         }
 
@@ -36,8 +36,8 @@ public class ExampleMultiGui extends AbstractMultiGui {
 
     private class ExampleGui2 extends AbstractGui {
         protected void init() {
-            setItem(new GuiItem(Material.STICKY_PISTON).onLeftClick((item,player,number)->{
-                player.openInventory(guis.get(0).getInventory());
+            setItem(new GuiItem(Material.STICKY_PISTON).onLeftClick((item,player,number, slot)->{
+                player.get().openInventory(guis.get(0).getInventory());
             }, true).setDisplayName("\u00A7aPrevious"),18);
         }
 

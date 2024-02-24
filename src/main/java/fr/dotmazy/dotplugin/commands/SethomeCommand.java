@@ -53,7 +53,7 @@ public class SethomeCommand implements CommandExecutor, TabCompleter {
         Player player = (Player) sender;
         Location loc = player.getLocation();
 
-        PlayerApi.setHome(player,args[0],loc);
+        //PlayerApi.setHome(player,args[0],loc);
 
         return true;
     }

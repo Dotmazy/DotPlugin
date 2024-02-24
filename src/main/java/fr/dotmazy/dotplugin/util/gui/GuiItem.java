@@ -12,7 +12,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +22,8 @@ public class GuiItem {
 
     private final ItemStack item;
     private int slot;
+
+    private final List<ItemEvent> events = new ArrayList<>();
 
     private final ItemEvent onRightClick;
     private final ItemEvent onShiftRightClick;
@@ -38,7 +39,7 @@ public class GuiItem {
     private boolean middleClick = false;
     private boolean numberClick = false;
 
-    public GuiItem(@NotNull ItemStack item){
+    public GuiItem(ItemStack item){
         if(item==null) throw new Error("Item can't be null.");
         this.item = item;
         this.onRightClick = new ItemEvent(ClickType.RIGHT, item);
@@ -49,7 +50,7 @@ public class GuiItem {
         this.onNumberClick = new ItemEvent(ClickType.NUMBER_KEY, item);
     }
 
-    public GuiItem(@NotNull Material item){
+    public GuiItem(Material item){
         this(new ItemStack(item));
     }
 
@@ -68,6 +69,12 @@ public class GuiItem {
         if(!isSet) event.setCanceled(cancelByDefault);
         event.setSlot(this.slot);
         InventoryEvents.itemClickEvents.add(event);
+        events.add(event);
+    }
+
+    public void _unregisterEvents(){
+        for(ItemEvent event : events)
+            InventoryEvents.itemClickEvents.remove(event);
     }
 
     public ItemStack getItem(){

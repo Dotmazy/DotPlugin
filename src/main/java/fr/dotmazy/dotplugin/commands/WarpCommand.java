@@ -55,7 +55,7 @@ public class WarpCommand extends CommandUtil implements CommandExecutor, TabComp
             return true;
         }
 
-        Location warp = CommandApi.getWarp(args[0]);
+        Location warp = null;//CommandApi.getWarp(args[0]);
 
         if (warp==null){
             sender.sendMessage(TextApi.getTranslateConfig("commands.warp.unknownWarp",options));

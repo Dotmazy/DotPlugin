@@ -1,6 +1,6 @@
 package fr.dotmazy.dotplugin.util.gui;
 
-import org.bukkit.entity.Player;
+import fr.dotmazy.dotplugin.util.Player;
 
 public interface ITickEvent {
     void run(Player player);

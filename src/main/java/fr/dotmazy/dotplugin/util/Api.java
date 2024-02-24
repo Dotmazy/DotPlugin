@@ -14,63 +14,70 @@ public class Api {
 
     public static class Text {
 
-        private static String transformText(String text, Map<String,Object> options){
-            Map<String,String> opts = new HashMap<>();
-            for(String arg : options.keySet())
-                if(options.get(arg) instanceof org.bukkit.entity.Player player){
-                    opts.put("%"+arg+"_name%",player.getName());
-                    opts.put("%"+arg+"_uuid%",player.getUniqueId().toString());
-                    opts.put("%"+arg+"_locale%",player.getLocale());
-                    opts.put("%"+arg+"_list_footer%",player.getPlayerListFooter());
-                    opts.put("%"+arg+"_list_header%",player.getPlayerListHeader());
-                    opts.put("%"+arg+"_list_name%",player.getPlayerListName());
-                    opts.put("%"+arg+"_time%",player.getPlayerTime()+"");
-                    opts.put("%"+arg+"_time_offset%",player.getPlayerTimeOffset()+"");
-                    opts.put("%"+arg+"_time_weather%",player.getPlayerWeather().toString());
-                    opts.put("%"+arg+"_custom_name%",player.getCustomName());
-                    opts.put("%"+arg+"_display_name%",player.getDisplayName());
-                    opts.put("%"+arg+"_allow_flight%",player.getAllowFlight()+"");
-                    opts.put("%"+arg+"_block_location%",blockLocation(player.getLocation()));
-                    opts.put("%"+arg+"_location%",simpleLocation(player.getLocation()));
-                    opts.put("%"+arg+"_advanced_location%",advancedLocation(player.getLocation()));
-                    opts.put("%"+arg+"_location_x%",player.getLocation().getX()+"");
-                    opts.put("%"+arg+"_location_y%",player.getLocation().getY()+"");
-                    opts.put("%"+arg+"_location_z%",player.getLocation().getZ()+"");
-                    opts.put("%"+arg+"_location_yaw%",player.getLocation().getYaw()+"");
-                    opts.put("%"+arg+"_location_pitch%",player.getLocation().getPitch()+"");
-                    opts.put("%"+arg+"_block_location_x%",player.getLocation().getBlockX()+"");
-                    opts.put("%"+arg+"_block_location_y%",player.getLocation().getBlockY()+"");
-                    opts.put("%"+arg+"_block_location_z%",player.getLocation().getBlockZ()+"");
-                    opts.put("%"+arg+"_fly_speed%",player.getFlySpeed()+"");
-                    opts.put("%"+arg+"_xp%",player.getExp()+"");
-                    opts.put("%"+arg+"_gamemode%",player.getGameMode().toString());
-                    opts.put("%"+arg+"_health%",player.getHealth()+"");
-                    opts.put("%"+arg+"_level%",player.getLevel()+"");
-                    opts.put("%"+arg+"_rank%",Api.Player.getRank(player));
-                    opts.put("%"+arg+"_prefix%",Api.Player.getPrefix(player));
-                    opts.put("%"+arg+"_suffix%",Api.Player.getSuffix(player));
-                    opts.put("%"+arg+"_walk_speed%",player.getWalkSpeed()+"");
-                    opts.put("%"+arg+"_compass_target_block_location%",blockLocation(player.getCompassTarget()));
-                    opts.put("%"+arg+"_compass_target_block_location_x%",player.getCompassTarget());
-                    opts.put("%"+arg+"_compass_target_block_location_y%",player.getCompassTarget());
-                    opts.put("%"+arg+"_compass_target_block_location_z%",player.getCompassTarget());
-                    opts.put("%"+arg+"_compass_target_location%",simpleLocation(player.getCompassTarget()));
-                    opts.put("%"+arg+"_compass_target_location_x%",player.getCompassTarget().getX()+"");
-                    opts.put("%"+arg+"_compass_target_location_y%",player.getCompassTarget().getY()+"");
-                    opts.put("%"+arg+"_compass_target_location_z%",player.getCompassTarget().getZ()+"");
-                    opts.put("%"+arg+"_compass_target_location_yaw%",player.getCompassTarget().getYaw()+"");
-                    opts.put("%"+arg+"_compass_target_location_pitch%",player.getCompassTarget().getPitch()+"");
-                    opts.put("%"+arg+"_compass_target_advanced_location%",advancedLocation(player.getCompassTarget()));
-                }else opts.put("%"+arg+"%",options.get(arg)+"");
+        public static String transformText(String text, Map<String,Object> options){
+            try{
+                Map<String,String> opts = new HashMap<>();
+                for(String arg : options.keySet())
+                    if(options.get(arg) instanceof org.bukkit.entity.Player player){
+                        opts.put("%"+arg+"_name%",player.getName());
+                        opts.put("%"+arg+"_uuid%",player.getUniqueId().toString());
+                        opts.put("%"+arg+"_locale%",player.getLocale());
+                        opts.put("%"+arg+"_list_footer%",player.getPlayerListFooter());
+                        opts.put("%"+arg+"_list_header%",player.getPlayerListHeader());
+                        opts.put("%"+arg+"_list_name%",player.getPlayerListName());
+                        opts.put("%"+arg+"_time%", String.valueOf(player.getPlayerTime()));
+                        opts.put("%"+arg+"_time_offset%", String.valueOf(player.getPlayerTimeOffset()));
+                        opts.put("%"+arg+"_weather%", String.valueOf(player.getPlayerWeather()));
+                        opts.put("%"+arg+"_custom_name%",player.getCustomName());
+                        opts.put("%"+arg+"_display_name%",player.getDisplayName());
+                        opts.put("%"+arg+"_allow_flight%", String.valueOf(player.getAllowFlight()));
+                        opts.put("%"+arg+"_block_location%",blockLocation(player.getLocation()));
+                        opts.put("%"+arg+"_location%",simpleLocation(player.getLocation()));
+                        opts.put("%"+arg+"_advanced_location%",advancedLocation(player.getLocation()));
+                        opts.put("%"+arg+"_location_x%", String.valueOf(player.getLocation().getX()));
+                        opts.put("%"+arg+"_location_y%", String.valueOf(player.getLocation().getY()));
+                        opts.put("%"+arg+"_location_z%", String.valueOf(player.getLocation().getZ()));
+                        opts.put("%"+arg+"_location_yaw%", String.valueOf(player.getLocation().getYaw()));
+                        opts.put("%"+arg+"_location_pitch%",player.getLocation().getPitch()+"");
+                        opts.put("%"+arg+"_block_location_x%",player.getLocation().getBlockX()+"");
+                        opts.put("%"+arg+"_block_location_y%",player.getLocation().getBlockY()+"");
+                        opts.put("%"+arg+"_block_location_z%",player.getLocation().getBlockZ()+"");
+                        opts.put("%"+arg+"_fly_speed%",player.getFlySpeed()+"");
+                        opts.put("%"+arg+"_xp%",player.getExp()+"");
+                        opts.put("%"+arg+"_gamemode%",player.getGameMode().toString());
+                        opts.put("%"+arg+"_health%",player.getHealth()+"");
+                        opts.put("%"+arg+"_level%",player.getLevel()+"");
+                        opts.put("%"+arg+"_rank%",Api.Player.getRank(player));
+                        opts.put("%"+arg+"_prefix%",Api.Player.getPrefix(player));
+                        opts.put("%"+arg+"_suffix%",Api.Player.getSuffix(player));
+                        opts.put("%"+arg+"_walk_speed%",player.getWalkSpeed()+"");
+                        opts.put("%"+arg+"_compass_target_block_location%",blockLocation(player.getCompassTarget()));
+                        opts.put("%"+arg+"_compass_target_block_location_x%",player.getCompassTarget().toString());
+                        opts.put("%"+arg+"_compass_target_block_location_y%",player.getCompassTarget().toString());
+                        opts.put("%"+arg+"_compass_target_block_location_z%",player.getCompassTarget().toString());
+                        opts.put("%"+arg+"_compass_target_location%",simpleLocation(player.getCompassTarget()));
+                        opts.put("%"+arg+"_compass_target_location_x%",player.getCompassTarget().getX()+"");
+                        opts.put("%"+arg+"_compass_target_location_y%",player.getCompassTarget().getY()+"");
+                        opts.put("%"+arg+"_compass_target_location_z%",player.getCompassTarget().getZ()+"");
+                        opts.put("%"+arg+"_compass_target_location_yaw%",player.getCompassTarget().getYaw()+"");
+                        opts.put("%"+arg+"_compass_target_location_pitch%",player.getCompassTarget().getPitch()+"");
+                        opts.put("%"+arg+"_compass_target_advanced_location%",advancedLocation(player.getCompassTarget()));
+                        opts.put("%"+arg+"_eye_location%",advancedLocation(player.getEyeLocation()));
+                    }else opts.put("%"+arg+"%",options.get(arg)+"");
 
 
-            opts.put("%n%","");
+                opts.put("%n%","");
 
-            String toReturn = text;
-            for(String arg : opts.keySet())
-                text = toReturn.replace(arg,opts.get(arg));
+                text = DotPlugin.getInstance().getConfig().getString(text);
+                for(String arg : opts.keySet())
+                    if(opts.get(arg)!=null)
+                        text = text.replace(arg,opts.get(arg));
 
-            return ChatColor.translateAlternateColorCodes('&',text);
+                return ChatColor.translateAlternateColorCodes('&',text);
+            }catch(Exception e){
+                e.printStackTrace();
+                return null;
+            }
         }
 
         private static String blockLocation(Location loc){
@@ -168,10 +175,15 @@ public class Api {
         }
 
         public static void updatePerms(org.bukkit.entity.Player player, String rank){
-            for(PermissionAttachmentInfo attachment : player.getEffectivePermissions())
-                try{player.removeAttachment(attachment.getAttachment());}catch(Exception ignored){}
-            for(String perm : Rank.getPerms(rank))
-                player.addAttachment(DotPlugin.getInstance(), perm, true);
+            try {
+                for (PermissionAttachmentInfo attachment : player.getEffectivePermissions())
+                    try {
+                        player.removeAttachment(attachment.getAttachment());
+                    } catch (Exception ignored) {
+                    }
+                for (String perm : Rank.getPerms(rank))
+                    player.addAttachment(DotPlugin.getInstance(), perm, true);
+            }catch(Exception e){}
         }
 
         public static void updatePerms(org.bukkit.entity.Player player){

@@ -4,21 +4,27 @@ import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.listeners.InventoryEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
+import fr.dotmazy.dotplugin.util.Player;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**@author Dotmazy */
 abstract public class AbstractGui {
 
     private final Inventory inv;
-    private Map<Integer, GuiItem> items;
+    private final Map<Integer, GuiItem> items = new HashMap<>();;
     private boolean isInit = false;
+    protected final List<Object> options = new ArrayList<>();
+    private boolean isOnTick;
 
-    public AbstractGui(){
+    public AbstractGui(Object... options){
+        this.options.add(options);
         if(getType()!=GuiType.CHEST){
             if(getName()!=null) inv = Bukkit.createInventory(null, getType().getType(), getName());
             else inv = Bukkit.createInventory(null, getType().getType());
@@ -27,9 +33,9 @@ abstract public class AbstractGui {
             if(getName()!=null) inv = Bukkit.createInventory(null, getSize(), getName());
             else inv = Bukkit.createInventory(null, getSize());
         }
-        items = new HashMap<>();
         init();
-    };
+        isOnTick = true;
+    }
 
     /**
      * Initialization of the gui.
@@ -39,7 +45,7 @@ abstract public class AbstractGui {
     /**
      * @re
      * */
-    protected int getTickDelay(){ return 1; };
+    protected int getTickDelay(){ return 1; }
 
     /**
      * @return The name of the gui.
@@ -84,11 +90,11 @@ abstract public class AbstractGui {
     }
 
     private void onOpenForce(Player player){
-        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player, true));
+        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player.get(), true));
     }
 
     private void onCloseForce(Player player){
-        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player, false));
+        DotPlugin.tickEvents.replace(this, DotPlugin.tickEvents.get(this).setActive(player.get(), false));
     }
 
     /**This function is call when open the inventory */
@@ -108,9 +114,29 @@ abstract public class AbstractGui {
      * */
     protected void setItem(GuiItem item, int slot){
         if(slot<inv.getSize() && slot>=0){
-            items.put(slot, item);
-            item.setSlot(slot);
-        }else throw new IllegalArgumentException("Slot number out of range (slot>size or slot<0).");
+            if(isOnTick){
+                if(items.containsKey(slot)){
+                    items.get(slot)._unregisterEvents();
+                    items.replace(slot, item);
+                }else
+                    items.put(slot, item);
+                item.setSlot(slot);
+                inv.setItem(slot, item.getItem());
+                item.create(inv, isDefaultCanceled());
+            }else {
+                items.put(slot, item);
+                item.setSlot(slot);
+            }
+        }else{
+            throw new IllegalArgumentException("Slot number out of range (slot>size or slot<0).");
+        }
+    }
+
+    /**
+     * Get an item on the gui
+     * */
+    protected GuiItem getItem(int slot){
+        return items.get(slot);
     }
 
     /**
@@ -131,42 +157,6 @@ abstract public class AbstractGui {
      * */
     protected void setItem(Material type, int slot){
         setItem(new GuiItem(type), slot);
-    }
-
-    /**
-     * @param item The item to put.
-     * @param slot The slot where put the item. (between 0 and size of the gui.
-     * <p></p>
-     * Put an item on a slot. (Only use in the onTick function)
-     * */
-    protected void setItemOnTick(GuiItem item, int slot){
-        if(slot<inv.getSize() && slot>=0){
-            items.put(slot, item);
-            item.setSlot(slot);
-            inv.setItem(slot, item.getItem());
-            item.create(inv, isDefaultCanceled());
-
-        }else throw new IllegalArgumentException("Slot number out of range (slot>size or slot<0).");
-    }
-
-    /**
-     * @param item The item to put.
-     * @param slot The slot where put the item. (between 0 and size of the gui)
-     * <p></p>
-     * Put an item on a slot. (Only use in the onTick function)
-     * */
-    protected void setItemOnTick(ItemStack item, int slot){
-        setItemOnTick(new GuiItem(item), slot);
-    }
-
-    /**
-     * @param type The type of the item to put.
-     * @param slot The slot where put the item. (between 0 and size of the gui)
-     * <p></p>
-     * Put an item on a slot. (Only use in the onTick function)
-     * */
-    protected void setItemOnTick(Material type, int slot){
-        setItemOnTick(new GuiItem(type), slot);
     }
 
     /**

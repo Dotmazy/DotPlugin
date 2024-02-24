@@ -48,7 +48,7 @@ public class SetspawnCommand implements CommandExecutor, TabCompleter {
 
         Location loc = player.getLocation();
 
-        CommandApi.setSpawn(loc);
+        //CommandApi.setSpawn(loc);
 
         return true;
     }

@@ -50,16 +50,21 @@ public class GamemodeCommand extends CommandUtil implements CommandExecutor, Tab
             sender.sendMessage(TextApi.getTranslateConfig("commands.gamemode.invalidPlayer",options));
             return true;
         }
-        if (player == null) player = (Player) sender;
-        player.setGameMode(
-                args[0].equals("survival") || args[0].equals("creative") || args[0].equals("adventure") || args[0].equals("spectator")?
-                GameMode.valueOf(args[0]):
+        boolean isMe = true;
+        if (player == null) {
+            player = (Player) sender;
+            isMe = false;
+        }
+        GameMode gamemode = args[0].equals("survival") || args[0].equals("creative") || args[0].equals("adventure") || args[0].equals("spectator")?
+                GameMode.valueOf(args[0].toUpperCase()):
                 args[0].equals("s")?GameMode.SURVIVAL:
-                args[0].equals("c")?GameMode.CREATIVE:
-                args[0].equals("a")?GameMode.ADVENTURE:
-                args[0].equals("sp")?GameMode.SPECTATOR:
-                GameMode.getByValue(Integer.parseInt(args[0]))
-        );
+                        args[0].equals("c")?GameMode.CREATIVE:
+                                args[0].equals("a")?GameMode.ADVENTURE:
+                                        args[0].equals("sp")?GameMode.SPECTATOR:
+                                                GameMode.getByValue(Integer.parseInt(args[0]));
+        if(isMe) player.sendMessage("Your gamemode have been changed to "+gamemode.name().toLowerCase()+".");
+        else player.sendMessage(player.getName()+" gamemode have been changed to "+gamemode.name().toLowerCase()+".");
+        player.setGameMode(gamemode);
         return true;
     }
 

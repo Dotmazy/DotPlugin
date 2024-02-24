@@ -1,9 +1,10 @@
 package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
+import fr.dotmazy.dotplugin.gui.CraftingTableGui;
 import fr.dotmazy.dotplugin.old.api.PlayerApi;
-import fr.dotmazy.dotplugin.util.Api;
-import fr.dotmazy.dotplugin.util.Rank;
+import fr.dotmazy.dotplugin.util.*;
+import fr.dotmazy.dotplugin.util.raw.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,10 +20,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-import org.minidns.record.A;
 
+import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Base64;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class PlayerEvents implements Listener {
 
@@ -32,17 +39,55 @@ public class PlayerEvents implements Listener {
         this.dotPlugin = dotPlugin;
     }
 
+    public static String calculateSHA256(byte[] data) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(data);
+            return bytesToHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for (byte b : bytes) {
+            result.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
+        }
+        return result.toString();
+    }
+
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
+    public void onResourcePackStatusChange(PlayerResourcePackStatusEvent event){
+        Player player = event.getPlayer();
+        PlayerResourcePackStatusEvent.Status status = event.getStatus();
+        switch (status){
+            case DECLINED:
+                player.kickPlayer("Resource pack is obligatory, pls enable it.");
+                break;
+            case FAILED_DOWNLOAD:
+                player.kickPlayer("An error occurred when downloading resource pack.\nPls contact our staff.");
+                break;
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(PlayerChatEvent event) {
         Player player = event.getPlayer();
         String message = event.getMessage();
         String prefix = Api.Player.getPrefix(player);
         String suffix = Api.Player.getSuffix(player);
-        if(DotPlugin.perms.contains(player)){
+        if(DotPlugin.chatInputPlayers.containsKey(player)) {
+            event.setCancelled(true);
+            ChatInputFunction function = DotPlugin.chatInputPlayers.get(player);
+            DotPlugin.chatInputPlayers.remove(player.getPlayer());
+            function.apply(message);
+        }else if(DotPlugin.adminChatPlayers.contains(player)){
             event.setCancelled(true);
             for (Player pl : Bukkit.getOnlinePlayers()){
                 if (pl.hasPermission("dotplugin.adminchat")){
-                    pl.sendMessage("(AdminChat) "+prefix+player.getName()+suffix+": ");
+                    pl.sendMessage("(AdminChat) "+(prefix==null?"":prefix)+player.getName()+(suffix==null?"":suffix)+": "+event.getMessage());
                 }
             }
         }else{
@@ -64,8 +109,22 @@ public class PlayerEvents implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
 
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        player.setResourcePack(ResourcePackUtil.resourcePackURL);
+
+        /*if(Database.executeStringQuery("SELECT playerUuid FROM link WHERE playerUuid='"+player.getName()+"'")!=null){
+            Database.executeUpdate("UPDATE link SET playerUuid='"+player.getUniqueId()+"' WHERE playerUuid='"+player.getName()+"'");
+            notLogin(player,0);
+        }else{
+            if(Database.executeStringQuery("SELECT memberId FROM link WHERE playerUuid='"+player.getUniqueId()+"'")==null)
+                notLink(player,0);
+            else notLogin(player,0);
+        }*/
+
         Api.Player.setOnline(player, true);
-        if(Api.Player.exist(player)) player.sendMessage("Welcome to the server "+player.getServer().getName());
+        if(Api.Player.exist(player)){
+            player.sendMessage("Welcome to the server "+player.getServer().getName());
+        }
         Api.Player.create(player);
         Api.Player.updatePerms(player);
         if(Api.Player.isFreeze(player)) DotPlugin.freezePlayers.add(player);
@@ -73,6 +132,32 @@ public class PlayerEvents implements Listener {
 
         for (Player pl : DotPlugin.vanishedPlayers)
             event.getPlayer().hidePlayer(pl);
+    }
+
+    private void notLink(Player player, int i) {
+        player.sendMessage("Please link your account on our discord: https://discord.gg/SGMU8WSDQz");
+        Bukkit.getScheduler().runTaskLater(DotPlugin.getInstance(),()->{
+            if(i<10) {
+                if(Database.executeStringQuery("SELECT playerUuid FROM link WHERE playerUuid='"+player.getName()+"'")==null)
+                    notLink(player, i+1);
+                else {
+                    player.sendMessage(ChatColor.GREEN + "You are successfully link");
+                    Database.executeUpdate("UPDATE link SET playerUuid='"+player.getUniqueId()+"' WHERE playerUuid='"+player.getName()+"'");
+                    notLogin(player,0);
+                }
+            }else player.kickPlayer(ChatColor.RED+"You are standing too long without link");
+        },100);
+    }
+
+    private void notLogin(Player player, int i){
+        DotPlugin.loginPlayers.add(player);
+        player.sendMessage("Please login or register");
+        Bukkit.getScheduler().runTaskLater(DotPlugin.getInstance(),()->{
+            if(i<10) {
+                if (DotPlugin.loginPlayers.contains(player)){ notLogin(player, i + 1);
+                }
+            }else player.kickPlayer(ChatColor.RED+"You are standing too long without login");
+        },100);
     }
 
     @EventHandler
@@ -93,6 +178,12 @@ public class PlayerEvents implements Listener {
         Player player = event.getPlayer();
         Action action = event.getAction();
         Block block = event.getClickedBlock();
+
+        if(action == Action.RIGHT_CLICK_BLOCK && block.getType() == Material.CRAFTING_TABLE){
+            event.setCancelled(true);
+            player.openInventory(new CraftingTableGui().getInventory());
+        }
+
         ItemStack item = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName("u00A7bDisplay wand");
@@ -109,7 +200,7 @@ public class PlayerEvents implements Listener {
     public void onPlayerEntityInteract(PlayerInteractAtEntityEvent event){
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
-        if(PlayerApi.isInModerationMode(player) && entity instanceof Player){
+        //if(PlayerApi.isInModerationMode(player) && entity instanceof Player){
             ItemStack item = player.getInventory().getItemInMainHand();
             assert item.getType() != Material.AIR;
             if (item.getItemMeta().getDisplayName().equals("u00A7cFreeze")){
@@ -131,7 +222,7 @@ public class PlayerEvents implements Listener {
             }else if (item.getItemMeta().getDisplayName().equals("u00A7cKnockback")){
                 entity.setVelocity(new Vector(1,1,0));
             }
-        }
+        //}
     }
 
 }

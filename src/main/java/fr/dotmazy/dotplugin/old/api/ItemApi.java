@@ -1,7 +1,6 @@
 package fr.dotmazy.dotplugin.old.api;
 
 import fr.dotmazy.dotplugin.DotPlugin;
-import fr.dotmazy.dotplugin.util.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.EnchantmentOffer;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class ItemApi {
 
-    public static boolean createItem(String name, String displayName, Material material, String... lore) {
+    /*public static boolean createItem(String name, String displayName, Material material, String... lore) {
         DotPlugin.files.get("items").get().set(name+".name",displayName);
         DotPlugin.files.get("items").get().set(name+".material",material);
         DotPlugin.files.get("items").get().set(name+".lore",lore);
@@ -32,6 +31,6 @@ public class ItemApi {
         DotPlugin.files.get("items").get().set(item.getName()+".lore",item.getLore());
         //DotPlugin.files.get("items").get().set(item.getName()+".enchants",item.getEnchant());
         return true;
-    }
+    }*/
 
 }

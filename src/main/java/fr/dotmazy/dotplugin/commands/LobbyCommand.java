@@ -48,7 +48,7 @@ public class LobbyCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        Location lobby = CommandApi.getLobby();
+        Location lobby = null; //CommandApi.getLobby();
 
         assert lobby != null;
         if (!player.hasPermission("dotplugin.lobby.noWait")){

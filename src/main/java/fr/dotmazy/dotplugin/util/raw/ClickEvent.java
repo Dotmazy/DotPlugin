@@ -1,15 +1,15 @@
 package fr.dotmazy.dotplugin.util.raw;
 
 public class ClickEvent{
-    private final Action action;
+    private final ClickAction action;
     private final String value;
 
-    public ClickEvent(Action action, String value){
+    public ClickEvent(ClickAction action, String value){
         this.action = action;
         this.value = value;
     }
 
-    public Action getAction() {
+    public ClickAction getAction() {
         return action;
     }
 

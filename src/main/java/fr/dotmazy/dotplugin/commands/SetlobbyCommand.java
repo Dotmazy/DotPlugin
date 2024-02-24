@@ -48,7 +48,7 @@ public class SetlobbyCommand implements CommandExecutor, TabCompleter {
 
         Location loc = player.getLocation();
 
-        CommandApi.setLobby(loc);
+        //CommandApi.setLobby(loc);
 
         return true;
     }

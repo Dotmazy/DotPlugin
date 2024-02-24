@@ -29,12 +29,12 @@ public class InventoryEvents implements Listener {
 				if(itemEvent.getItem() == null) event.setCancelled(itemEvent.isCanceled());
 				else if (clickedItem.equals(itemEvent.getItem()) && event.getSlot() == itemEvent.getSlot() && event.getClick() == itemEvent.getType()) {
 					event.setCancelled(itemEvent.isCanceled());
-					if (itemEvent.getEvent() != null) itemEvent.getEvent().run(itemEvent.getItem(), player,number);
+					if (itemEvent.getEvent() != null) itemEvent.getEvent().run(itemEvent.getItem(), fr.dotmazy.dotplugin.util.Player.valueOf(player),number,itemEvent.getSlot());
 				}
 		}
 		}catch(Exception ignore){}
 
-		if(!event.isCancelled()) event.setCancelled(PlayerApi.isInModerationMode((Player)event.getWhoClicked()));
+		//if(!event.isCancelled()) event.setCancelled(PlayerApi.isInModerationMode((Player)event.getWhoClicked()));
 
 		/*if(event.getInventory() == DisplayGui.inv) {
 			event.setCancelled(true);
@@ -182,7 +182,7 @@ public class InventoryEvents implements Listener {
 	public static void onClose(InventoryCloseEvent event){
 		for(InventoryEvent inventoryEvent : closeEvents){
 			if(event.getInventory() == inventoryEvent.getInventory()){
-				inventoryEvent.getEvent().run((Player)event.getPlayer());
+				inventoryEvent.getEvent().run(fr.dotmazy.dotplugin.util.Player.valueOf((Player)event.getPlayer()));
 			}
 		}
 	}
@@ -191,7 +191,7 @@ public class InventoryEvents implements Listener {
 	public static void onOpen(InventoryOpenEvent event){
 		for(InventoryEvent inventoryEvent : openEvents){
 			if(event.getInventory() == inventoryEvent.getInventory()){
-				inventoryEvent.getEvent().run((Player)event.getPlayer());
+				inventoryEvent.getEvent().run(fr.dotmazy.dotplugin.util.Player.valueOf((Player)event.getPlayer()));
 			}
 		}
 	}

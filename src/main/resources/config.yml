@@ -1,8 +1,27 @@
+discord_bot:
+  token: "MTAzNTA5NjI3NzIxMTQxODY0NA.GShZRL.VAMTamfg9GqNu4Xb8VnpVA2uJvQr1EqwabelRk"
+  activity:
+    type: "playing"
+    name: "Industrial Revolution"
+  discordLogChannel: 1071426254160527470
+
+database:
+  isMysql: false
+  mysql:
+    host: "localhost"
+    port: 3306
+    name: "test2"
+    user: "root"
+    password: ""
+
+
 # Channel where log are send
-logChannel: "1111927223314825256"
+logChannel: 1111927223314825256
 logChannelInvalid: "&cCan't send this message to discord because the log channel is invalid.\n&cPlease change the log channel in config.yml."
 logSuccessfullySend: "You have send this log to discord: \n%log%"
 logArgumentsError: "&cPlease use this command: /discord log <type> <message>"
+
+
 
 # Channel where in game chat are send
 # inGameChatChannel: "1111928135974408202"
@@ -27,6 +46,9 @@ commands:
     message: "Do you mean &l%test_argument%&r?"
 
   music:
+    enable: true
+
+  mobgenerator:
     enable: true
 
   spawn:

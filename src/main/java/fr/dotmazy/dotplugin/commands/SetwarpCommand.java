@@ -53,7 +53,7 @@ public class SetwarpCommand implements CommandExecutor, TabCompleter {
 
         Location loc = player.getLocation();
 
-        CommandApi.setWarp(args[0], loc);
+        //CommandApi.setWarp(args[0], loc);
 
         return true;
     }

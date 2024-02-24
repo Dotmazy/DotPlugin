@@ -1,18 +1,22 @@
-plugins {
-    id 'java'
-}
+plugins {id 'java'}
 
 repositories {
     mavenCentral()
     maven { url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
     maven { url = "https://nexus.scarsz.me/content/groups/public/" }
+    maven { url = "https://jitpack.io/" }
 }
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT"
 
-    compileOnly "com.discordsrv:discordsrv:1.26.0"
+    implementation 'org.javacord:javacord:3.8.0'
+    implementation group: 'org.luaj', name: 'luaj-jse', version: '3.0-beta2'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.10'
+    implementation 'com.github.sealedtx:java-youtube-downloader:3.2.3'
+    implementation 'com.alibaba:fastjson:2.0.28'
 
     compileOnly fileTree(dir:"libs/",include:"*.jar")
 }
@@ -39,13 +43,39 @@ java {
     }
 }
 
-jar{
-}
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {configurations.runtimeClasspath.collect {it.name.equalsIgnoreCase("discordsrv-1.26.0.jar")
+    List<String> test = List.of(
+        "javacord-api-3.8.0.jar",
+        "javacord-core-3.8.0.jar",
+        "luaj-jse-3.0-beta2.jar",
+        "okhttp-4.9.3.jar",
+        "jackson-databind-2.12.7.1.jar",
+        "jackson-core-2.12.7.jar",
+        "jackson-annotations-2.12.7.jar",
+        "vavr-0.10.4.jar",
+        "kotlin-stdlib-common-1.4.10.jar",
+        "kotlin-stdlib-1.4.10.jar",
+        "okio-jvm-2.8.0.jar",
+        "logging-interceptor-4.9.3.jar",
+        "nv-websocket-client-2.14.jar",
+        "java-youtube-downloader-3.2.3.jar",
+        "fastjson-2.0.28.jar",
+        "fastjson2-2.0.28.jar",
+        "fastjson2-extension-2.0.28.jar"
+    )
+
+
+    if(test.contains(it.name)) zipTree(it)
+    else System.out.println(it.name)
+}}}
 
 tasks.withType(JavaCompile).configureEach {
     libsDirectory.set(file("/server/plugins/"))
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release = targetJavaVersion
+        options.compilerArgs << "--enable-preview"
     }
 }
 

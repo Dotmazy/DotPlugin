@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class CommandApi {
 
-    public static boolean setSpawn(Location location){
+    /*public static boolean setSpawn(Location location){
         try {
             String worldName = Objects.requireNonNull(location.getWorld()).getName();
             double xPos = location.getX();
@@ -101,6 +101,6 @@ public class CommandApi {
         }else {
             return null;
         }
-    }
+    }*/
 
 }

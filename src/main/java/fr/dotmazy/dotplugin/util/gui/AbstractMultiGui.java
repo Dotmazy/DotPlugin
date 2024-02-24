@@ -3,13 +3,15 @@ package fr.dotmazy.dotplugin.util.gui;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class AbstractMultiGui {
-    protected final List<AbstractGui> guis;
+    protected final List<AbstractGui> guis = new ArrayList<>();
+    protected final List<Object> options = new ArrayList<>();
 
-    public AbstractMultiGui(){
-        this.guis = new ArrayList<>();
+    public AbstractMultiGui(Object... options){
+        this.options.add(options);
         init();
     }
 
@@ -23,6 +25,14 @@ public abstract class AbstractMultiGui {
      * */
     public Inventory getMainInventory(){
         if(this.guis.size()>0) return this.guis.get(0).getInventory();
+        else return null;
+    }
+
+    /**
+     * Get an inventory on the multi gui.
+     * */
+    public Inventory getInventory(int inv){
+        if(this.guis.size()>inv) return this.guis.get(inv).getInventory();
         else return null;
     }
 

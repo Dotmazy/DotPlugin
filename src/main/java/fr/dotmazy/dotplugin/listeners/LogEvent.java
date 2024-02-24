@@ -1,8 +1,13 @@
 package fr.dotmazy.dotplugin.listeners;
 
 import fr.dotmazy.dotplugin.DotPlugin;
+import fr.dotmazy.dotplugin.discord.DiscordBot;
+import org.javacord.api.entity.channel.Channel;
+import org.javacord.api.entity.channel.TextChannel;
 
+import java.util.Optional;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
@@ -14,16 +19,23 @@ public class LogEvent extends ConsoleHandler {
         this.dotPlugin = dotPlugin;
     }
 
-    @Override
     public void publish(LogRecord record) {
         Level level = record.getLevel();
         String loggerName = record.getLoggerName();
         String message = record.getMessage();
 
-        //DiscordUtil.sendMessage(DiscordUtil.getTextChannelById(dotPlugin.getConfig().getString("logChannel")),
-                //"level:"+level.toString()+" | loggername:"+loggerName+" | message:"+message);
+        if(level != Level.WARNING){
+            super.publish(record);
+            flush();
+        }
 
-        super.publish(record);
+        if(DiscordBot.api != null){
+            Optional<Channel> c = DiscordBot.api.getChannelById(dotPlugin.getConfig().getLong("logChannel"));
+            if(c.isPresent() && c.get().asTextChannel().isPresent()){
+                TextChannel channel = c.get().asTextChannel().get();
+                //channel.sendMessage("```"+(level==Level.INFO?"javascript\n/*":(level==Level.WARNING?"\n'":""))+"```");
+                //channel.sendMessage("level:"+level.toString()+" | loggername:"+loggerName+" | message:"+message);
+            }
+        }
     }
-
 }

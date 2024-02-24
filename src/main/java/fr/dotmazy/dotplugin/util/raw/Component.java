@@ -3,7 +3,8 @@ package fr.dotmazy.dotplugin.util.raw;
 public class Component{
     private final String text;
     private String insertion = null;
-    private ClickEvent event = null;
+    private ClickEvent clickEvent = null;
+    private HoverEvent hoverEvent = null;
     private boolean italic = false;
     private boolean underlined = false;
     private boolean strikethrough = false;
@@ -26,12 +27,21 @@ public class Component{
         return this;
     }
 
-    public ClickEvent getEvent() {
-        return event;
+    public ClickEvent getClickEvent() {
+        return clickEvent;
     }
 
-    public Component setEvent(ClickEvent event) {
-        this.event = event;
+    public Component setClickEvent(ClickEvent event) {
+        this.clickEvent = event;
+        return this;
+    }
+
+    public HoverEvent getHoverEvent() {
+        return hoverEvent;
+    }
+
+    public Component setHoverEvent(HoverEvent event) {
+        this.hoverEvent = event;
         return this;
     }
 

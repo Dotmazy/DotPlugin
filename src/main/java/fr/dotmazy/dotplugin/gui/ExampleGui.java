@@ -8,15 +8,15 @@ import org.bukkit.Material;
 public class ExampleGui extends AbstractGui {
 
     protected void init() {
-        makeFrame(new GuiItem(Material.STONE).onMiddleClick((item,player,number)->{
-            player.sendMessage("Don't touch the decoration !");
+        makeFrame(new GuiItem(Material.STONE).onMiddleClick((item,player,number, slot)->{
+            player.get().sendMessage("Don't touch the decoration !");
         }, true), 1);
 
         makeSquare(Material.ITEM_FRAME, 2, 2, 3, 3);
 
-        setItem(new GuiItem(Material.STICKY_PISTON).onNumberClick((item,player,number)->{
+        setItem(new GuiItem(Material.STICKY_PISTON).onNumberClick((item,player,number, slot)->{
             if(number==5){
-                player.sendMessage("Wow, you have find the secret.");
+                player.get().sendMessage("Wow, you have find the secret.");
             }
         }, true), 33);
     }

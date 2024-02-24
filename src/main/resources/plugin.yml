@@ -4,6 +4,16 @@ main: ${plugin_main}
 api-version: '${plugin_api_version}'
 authors: [${plugin_authors}]
 commands:
+  database:
+    description: Enable or disable database
+    aliases: db
+  mobgenerator:
+    description: A mob generator
+    aliases: [mg,mobg,mgenerator]
+  login:
+    description: Login
+  lua:
+    description: Run lua script
   guitest:
     description: no
   rank:

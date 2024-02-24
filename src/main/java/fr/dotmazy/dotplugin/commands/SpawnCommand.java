@@ -43,7 +43,7 @@ public class SpawnCommand implements CommandExecutor, TabCompleter {
             return true;
         }
 
-        Location spawn = CommandApi.getSpawn(player.getWorld());
+        Location spawn = null;//CommandApi.getSpawn(player.getWorld());
 
         if (!Api.Player.hasPerms(player,"dotplugin.spawn.noWait")){
             Location loc = player.getLocation();

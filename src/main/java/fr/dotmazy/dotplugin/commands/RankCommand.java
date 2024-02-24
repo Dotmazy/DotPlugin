@@ -3,7 +3,6 @@ package fr.dotmazy.dotplugin.commands;
 import fr.dotmazy.dotplugin.DotPlugin;
 import fr.dotmazy.dotplugin.gui.RankGui;
 import fr.dotmazy.dotplugin.old.api.PermApi;
-import fr.dotmazy.dotplugin.old.api.RankApi;
 import fr.dotmazy.dotplugin.old.api.TextApi;
 import fr.dotmazy.dotplugin.util.Rank;
 import java.lang.Object;
@@ -255,9 +254,9 @@ public class RankCommand implements CommandExecutor, TabCompleter {
             switch (args[0]){
                 case "modify":
                 case "remove":
-                    for (Rank rank : RankApi.getRanks()){
-                        if (rank.getName().startsWith(args[1])) list.add(rank.getName());
-                    }
+                    //for (Rank rank : RankApi.getRanks()){
+                        //if (rank.getName().startsWith(args[1])) list.add(rank.getName());
+                    //}
                     break;
                 case "join":
                     for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -269,9 +268,9 @@ public class RankCommand implements CommandExecutor, TabCompleter {
         }else if(args.length==3){
             switch (args[0]) {
                 case "join":
-                    for (Rank rank : RankApi.getRanks()) {
-                        if (rank.getName().startsWith(args[1])) list.add(rank.getName());
-                    }
+                    //for (Rank rank : RankApi.getRanks()) {
+                        //if (rank.getName().startsWith(args[1])) list.add(rank.getName());
+                    //}
                     break;
                 case "create":
                     if ("-perms".startsWith(args[2])) list.add("-perms");
@@ -293,15 +292,15 @@ public class RankCommand implements CommandExecutor, TabCompleter {
         }else if(args.length > 3 && args[0].equalsIgnoreCase("modify")){
             switch (args[2]) {
                 case "prefix":
-                    if(RankApi.getRank(args[1]) != null && Objects.requireNonNull(RankApi.getRank(args[1])).getPrefix().startsWith(args[3])) list.add(Objects.requireNonNull(RankApi.getRank(args[1])).getPrefix());
+                    //if(RankApi.getRank(args[1]) != null && Objects.requireNonNull(RankApi.getRank(args[1])).getPrefix().startsWith(args[3])) list.add(Objects.requireNonNull(RankApi.getRank(args[1])).getPrefix());
                     break;
                 case "suffix":
-                    if(RankApi.getRank(args[1]) != null && Objects.requireNonNull(RankApi.getRank(args[1])).getSuffix().startsWith(args[3])) list.add(Objects.requireNonNull(RankApi.getRank(args[1])).getSuffix());
+                    //if(RankApi.getRank(args[1]) != null && Objects.requireNonNull(RankApi.getRank(args[1])).getSuffix().startsWith(args[3])) list.add(Objects.requireNonNull(RankApi.getRank(args[1])).getSuffix());
                     break;
                 case "addperm":
-                    for(String perm : PermApi.getPermissions()){
-                        if (perm.startsWith(args[3])) list.add(perm);
-                    }
+                    //for(String perm : PermApi.getPermissions()){
+                        //if (perm.startsWith(args[3])) list.add(perm);
+                    //}
                     break;
                 default: break;
             }

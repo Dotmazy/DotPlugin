@@ -22,7 +22,8 @@ public class RawBuilder {
             if(!isFirst) result += ",";
             result+="{\"text\":\""+component.getText()+"\"";
             if(component.getInsertion() != null) result+=",\"insertion\":\""+component.getInsertion()+"\"";
-            if(component.getEvent() != null) result+=",\"clickEvent\":{\"action\":\""+component.getEvent().getAction().toString()+"\",\"value\":\""+component.getEvent().getValue()+"\"}";
+            if(component.getClickEvent() != null) result+=",\"clickEvent\":{\"action\":\""+component.getClickEvent().getAction().toString()+"\",\"value\":\""+component.getClickEvent().getValue()+"\"}";
+            if(component.getHoverEvent() != null) result+=",\"hoverEvent\":{\"action\":\""+component.getHoverEvent().getAction().toString()+"\",\"contents\":\""+component.getHoverEvent().getContents()+"\"}";
             if(component.isItalic()) result+=",\"italic\":\"true\"";
             if(component.isStrikethrough()) result+=",\"strikethrough\":\"true\"";
             if(component.isUnderlined()) result+=",\"underlined\":\"true\"";

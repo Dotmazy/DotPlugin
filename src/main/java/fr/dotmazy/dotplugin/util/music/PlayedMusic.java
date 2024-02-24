@@ -31,6 +31,10 @@ public class PlayedMusic {
         return minutes+":"+(String.valueOf(secondsR).length()==1?"0":"")+secondsR;
     }
 
+    public boolean isFinished(Music music){
+        return time > music.getTime()*20;
+    }
+
     public String getPercentage(){
         return (int)((time/(music.getTime()*20))*100)+"%";
     }
